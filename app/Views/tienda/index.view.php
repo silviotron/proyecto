@@ -1,4 +1,4 @@
-        <div class="products-catagories-area clearfix">
+<div class="products-catagories-area clearfix">
             <div class="amado-pro-catagory clearfix">
 
                 <div class="single-products-catagory clearfix">
