@@ -9,6 +9,12 @@ class FrontController {
     static function main() {
         session_start();
         if (!isset($_SESSION['usuario'])) {
+            Route::add('/',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->index();
+                    }
+                    , 'get');
 
             Route::add('/login',
                     function () {
@@ -27,7 +33,8 @@ class FrontController {
                         header('location: /login');
                     }
             );
-        } else {
+            #panel control    
+        } else if ($_SESSION['usuario']['id_rol'] != 5) {
             //Rutas que están disponibles para todos
             Route::add('/',
                     function () {
@@ -47,8 +54,7 @@ class FrontController {
                         $controlador = new \Com\Daw2\Controllers\UsuarioController();
                         $controlador->mostrarPerfil();
                     }
-                    , 'get');                    
-
+                    , 'get');
 
             # Gestion de usuarios
             if (strpos($_SESSION['permisos']['usuarios'], 'r') !== false) {
@@ -110,8 +116,8 @@ class FrontController {
                         }
                         , 'get');
             }
-            
-            # Gestion de usuarios
+
+            # Gestion de productos
             if (strpos($_SESSION['permisos']['productos'], 'r') !== false) {
                 Route::add('/productos',
                         function () {
@@ -120,51 +126,112 @@ class FrontController {
                         }
                         , 'get');
 
-                Route::add('/usuarios/view/([A-Za-z0-9]+)',
+                Route::add('/productos/view/([A-Za-z0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->view($id);
                         }
                         , 'get');
             }
-            if (strpos($_SESSION['permisos']['usuarios'], 'd') !== false) {
-                Route::add('/usuarios/delete/([A-Za-z0-9]+)',
+            if (strpos($_SESSION['permisos']['productos'], 'd') !== false) {
+                Route::add('/productos/delete/([A-Za-z0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->delete($id);
                         }
                         , 'get');
             }
-            if (strpos($_SESSION['permisos']['usuarios'], 'w') !== false) {
-                Route::add('/usuarios/edit/([A-Za-z0-9]+)',
+            if (strpos($_SESSION['permisos']['productos'], 'w') !== false) {
+                Route::add('/productos/edit/([A-Za-z0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->mostrarEdit($id);
                         }
                         , 'get');
 
-                Route::add('/usuarios/edit/([A-Za-z0-9]+)',
+                Route::add('/productos/edit/([A-Za-z0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->edit($id);
                         }
                         , 'post');
 
-                Route::add('/usuarios/add',
+                Route::add('/productos/add',
                         function () {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->mostrarAdd();
                         }
                         , 'get');
 
-                Route::add('/usuarios/add',
+                Route::add('/productos/add',
                         function () {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->add();
                         }
                         , 'post');
 
-                Route::add('/usuarios/cant_add',
+                Route::add('/productos/cant_add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->cant_add();
+                        }
+                        , 'get');
+            }
+
+            # Gestion de categorias
+            if (strpos($_SESSION['permisos']['categorias'], 'r') !== false) {
+                Route::add('/categorias',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
+                            $controlador->mostrarTodos();
+                        }
+                        , 'get');
+
+                Route::add('/productos/view/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->view($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['categorias'], 'd') !== false) {
+                Route::add('/productos/delete/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->delete($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['categorias'], 'w') !== false) {
+                Route::add('/productos/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->mostrarEdit($id);
+                        }
+                        , 'get');
+
+                Route::add('/productos/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->edit($id);
+                        }
+                        , 'post');
+
+                Route::add('/productos/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->mostrarAdd();
+                        }
+                        , 'get');
+
+                Route::add('/productos/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->add();
+                        }
+                        , 'post');
+
+                Route::add('/productos/cant_add',
                         function () {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
                             $controlador->cant_add();
@@ -186,6 +253,14 @@ class FrontController {
                         $controller->error405();
                     }
             );
+        } 
+        else if ($_SESSION['usuario']['id_rol'] == 5) {
+          Route::add('/',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->index();
+                    }
+                    , 'get');  
         }
         Route::run();
     }

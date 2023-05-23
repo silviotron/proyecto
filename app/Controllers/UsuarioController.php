@@ -34,13 +34,16 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $permisos = array(
             'usuarios' => '',
             'productos' => '',
+            'categorias' => ''
         );
         if (self::ADMINISTRADOR == $idRol) {
             $permisos['usuarios'] = "rwd";
             $permisos['productos'] = "rwd";
+            $permisos['categorias'] = "rwd";
         } elseif (self::AUDITOR == $idRol) {
             $permisos['usuarios'] = "r";
             $permisos['productos'] = "r";
+            $permisos['categorias'] = "r";
         }
         return $permisos;
     }

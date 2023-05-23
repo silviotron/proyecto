@@ -27,7 +27,6 @@
                                     <th scope="col">Formato</th>
                                     <th scope="col">Stock</th>                            
                                     <th scope="col">Categoria</th>
-                                    <th scope="col">Familia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,7 +39,6 @@
                                         <td><?php echo $producto['formato'] ?></td> 
                                         <td><?php echo $producto['stock'] ?></td>    
                                         <td><?php echo $producto['nombre_categoria'] ?></td>   
-                                        <td><?php echo $producto['nombre_familia']!=null?$producto['nombre_familia']:"" ?></td>   
                                         <td>   
                                             <?php if (strpos($_SESSION['permisos']['productos'], 'w') !== false) { ?>                                     
                                                 <a href="/productos/edit/<?php echo $producto['id'] ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
