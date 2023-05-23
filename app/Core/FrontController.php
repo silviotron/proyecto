@@ -110,6 +110,67 @@ class FrontController {
                         }
                         , 'get');
             }
+            
+            # Gestion de usuarios
+            if (strpos($_SESSION['permisos']['productos'], 'r') !== false) {
+                Route::add('/productos',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
+                            $controlador->mostrarTodos();
+                        }
+                        , 'get');
+
+                Route::add('/usuarios/view/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->view($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['usuarios'], 'd') !== false) {
+                Route::add('/usuarios/delete/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->delete($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['usuarios'], 'w') !== false) {
+                Route::add('/usuarios/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->mostrarEdit($id);
+                        }
+                        , 'get');
+
+                Route::add('/usuarios/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->edit($id);
+                        }
+                        , 'post');
+
+                Route::add('/usuarios/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->mostrarAdd();
+                        }
+                        , 'get');
+
+                Route::add('/usuarios/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->add();
+                        }
+                        , 'post');
+
+                Route::add('/usuarios/cant_add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->cant_add();
+                        }
+                        , 'get');
+            }
 
 
             Route::pathNotFound(

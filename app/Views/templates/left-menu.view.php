@@ -18,6 +18,13 @@
         </li><!-- End Usuarios Page Nav -->
         
         <li class="nav-item">
+            <a class="nav-link <?php echo isset($seccion) && $seccion === '/productos' ? '' : 'collapsed'; ?>" href="/productos">
+                <i class="bi bi-box-seam"></i>
+                <span>Productos</span>
+            </a>
+        </li><!-- End Productos Page Nav -->
+        
+        <li class="nav-item">
             <a class="nav-link <?php echo isset($seccion) && $seccion === '/perfil' ? '' : 'collapsed'; ?>" href="/perfil">
                 <i class="bi bi-person"></i>
                 <span>Perfil</span>

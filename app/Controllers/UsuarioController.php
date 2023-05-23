@@ -47,7 +47,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
 
     function mostrarTodos() {
         $data = array(
-            'seccion' => ['/usuarios'],
+            'seccion' => '/usuarios',
             'titulo' => 'Usuarios',
             'breadcrumb' => ['Usuarios']
         );
@@ -58,7 +58,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
     
     function mostrarPerfil() {
         $data = array(
-            'seccion' => ['/perfil'],
+            'seccion' => '/perfil',
             'titulo' => 'Perfil',
             'breadcrumb' => ['Perfil']
         );       
