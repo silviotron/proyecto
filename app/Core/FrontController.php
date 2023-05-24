@@ -8,7 +8,21 @@ class FrontController {
 
     static function main() {
         session_start();
-        if (!isset($_SESSION['usuario'])) {
+        if (!isset($_SESSION['usuario']) || $_SESSION['usuario']['id_rol'] == 5) {
+            if (!isset($_SESSION['usuario'])) {
+                Route::add('/login',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->login();
+                        }
+                        , 'get');
+                Route::add('/login',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador->loginProceso();
+                        }
+                        , 'post');
+            }
             Route::add('/',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\TiendaController();
@@ -16,21 +30,41 @@ class FrontController {
                     }
                     , 'get');
 
-            Route::add('/login',
+            Route::add('/tienda',
                     function () {
-                        $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                        $controlador->login();
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->shop();
                     }
                     , 'get');
-            Route::add('/login',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                        $controlador->loginProceso();
+            Route::add('/tienda/([A-Za-z0-9]+)',
+                    function ($categoria) {
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->shop($categoria);
                     }
-                    , 'post');
+                    , 'get');
+            Route::add('/tienda/producto/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->details($id);
+                    }
+                    , 'get');
+            Route::add('/carrito',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->cart();
+                    }
+                    , 'get');
+
+            Route::add('/carrito/add/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->add($id);
+                    }
+                    , 'get');
+
             Route::pathNotFound(
                     function () {
-                        header('location: /login');
+                        header('location: /');
                     }
             );
             #panel control    
@@ -40,12 +74,6 @@ class FrontController {
                     function () {
                         $controlador = new \Com\Daw2\Controllers\InicioController();
                         $controlador->index();
-                    }
-                    , 'get');
-            Route::add('/session/borrar',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\SessionController();
-                        $controlador->destroySession();
                     }
                     , 'get');
 
@@ -238,7 +266,12 @@ class FrontController {
                         }
                         , 'get');
             }
-
+            Route::add('/session/borrar',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\SessionController();
+                        $controlador->destroySession();
+                    }
+                    , 'get');
 
             Route::pathNotFound(
                     function () {
@@ -253,14 +286,6 @@ class FrontController {
                         $controller->error405();
                     }
             );
-        } 
-        else if ($_SESSION['usuario']['id_rol'] == 5) {
-          Route::add('/',
-                    function () {
-                        $controlador = new \Com\Daw2\Controllers\TiendaController();
-                        $controlador->index();
-                    }
-                    , 'get');  
         }
         Route::run();
     }
