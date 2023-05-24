@@ -8,13 +8,13 @@
         <div class="catagories-menu">
             <ul>
                 <li class="active"><a href="#">Todo</a></li>
-                <li ><a href="#">Chairs</a></li>
-                <li><a href="#">Beds</a></li>
-                <li><a href="#">Accesories</a></li>
-                <li><a href="#">Furniture</a></li>
-                <li><a href="#">Home Deco</a></li>
-                <li><a href="#">Dressings</a></li>
-                <li><a href="#">Tables</a></li>
+                <li ><a href="#">Categoría 1</a></li>
+                <li><a href="#">Categoría 2</a></li>
+                <li><a href="#">Categoría 3</a></li>
+                <li><a href="#">Categoría 4</a></li>
+                <li><a href="#">Categoría 5</a></li>
+                <li><a href="#">Categoría 6</a></li>
+                <li><a href="#">Categoría 7</a></li>
             </ul>
         </div>
     </div>
@@ -25,28 +25,28 @@
         <div class="widget-desc">
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="amado">
-                <label class="form-check-label" for="amado">Amado</label>
+                <input class="form-check-input" type="checkbox" value="" id="marca1">
+                <label class="form-check-label" for="marca1">Marca 1</label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="ikea">
-                <label class="form-check-label" for="ikea">Ikea</label>
+                <input class="form-check-input" type="checkbox" value="" id="marca2">
+                <label class="form-check-label" for="marca2">Marca 2</label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="furniture">
-                <label class="form-check-label" for="furniture">Furniture Inc</label>
+                <input class="form-check-input" type="checkbox" value="" id="marca3">
+                <label class="form-check-label" for="marca3">Marca 3</label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="factory">
-                <label class="form-check-label" for="factory">The factory</label>
+                <input class="form-check-input" type="checkbox" value="" id="marca4">
+                <label class="form-check-label" for="marca4">Marca 4</label>
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="artdeco">
-                <label class="form-check-label" for="artdeco">Artdeco</label>
+                <input class="form-check-input" type="checkbox" value="" id="marca5">
+                <label class="form-check-label" for="marca5">Marca 5</label>
             </div>
         </div>
     </div>
@@ -126,16 +126,17 @@
             </div>
         </div>
         <div class="row">
-            <?php //var_dump($productos);
+            <?php
+            //var_dump($productos);
             foreach ($productos as $producto) {
                 ?>
                 <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                     <div class="single-product-wrapper">
-
-                        <div class="product-img">
-                            <img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="">
-                        </div>
-
+                        <a href="tienda/producto/<?php echo $producto['id'] ?>">
+                            <div class="product-img">
+                                <img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="">
+                            </div>
+                        </a>
                         <div class="product-description d-flex align-items-center justify-content-between">
 
                             <div class="product-meta-data">

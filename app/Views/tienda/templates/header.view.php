@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <title>Amado - Furniture Ecommerce Template | Cart</title>
+    <title>Calceta - <?php echo $titulo?></title>
 
     <link rel="icon" href="img/core-img/favicon.ico">
 
@@ -43,7 +43,7 @@
         <div class="mobile-nav">
 
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <a href="index.html"><img src="img/core-img/logo.png" alt="logo"></a>
             </div>
 
             <div class="amado-navbar-toggler">
@@ -58,13 +58,15 @@
             </div>
 
             <div class="logo">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <a href="index.html"><img src="img/core-img/logo.png" alt="logo"></a>
             </div>
 
             <nav class="amado-nav">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li class="active"><a href="/tienda">Shop</a></li>
+                    <li class="<?php echo isset($seccion) && $seccion === '/' ? 'active' : ''; ?>" ><a href="/">Home</a></li>
+                    <li class="<?php echo isset($seccion) && $seccion === '/tienda' ? 'active' : ''; ?>"><a href="/tienda">Shop</a></li>
+                    <li class="<?php echo isset($seccion) && $seccion === '#' ? 'active' : ''; ?>"><a href="#">TBD</a></li>
+                    <li class="<?php echo isset($seccion) && $seccion === '#' ? 'active' : ''; ?>"><a href="#">TBD</a></li>
                 </ul>
             </nav>
 
@@ -79,10 +81,10 @@
             </div>
 
             <div class="social-info d-flex justify-content-between">
-                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                <a href="https://goo.gl/maps/SW1pJExJcGcTDVrU8" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/planetacalceta/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/people/calceta/100041290436579/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                <a href="https://www.paxinasgalegas.es/calceta-467645em.html" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
             </div>
         </header>
 

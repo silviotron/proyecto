@@ -1,4 +1,3 @@
-<?php var_dump($producto) ?>
         <div class="single-product-area section-padding-100 clearfix">
             <div class="container-fluid">
                 <div class="row">
