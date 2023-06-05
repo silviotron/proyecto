@@ -13,8 +13,10 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
+                    <div class="m-0 font-weight-bold justify-content-end">
+                        <a href="/productos/add/" class="btn btn-primary ml-1 float-right" style="margin: 10px"> Nuevo producto <i class="bi bi-plus"></i></a>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">Productos</h5>
                         <table id="tabladatos" class="table table-striped">                    
@@ -34,7 +36,7 @@
                                     <tr >
                                         <th scope="row"><?php echo $producto['id'] ?></th>
                                         <td><?php echo $producto['nombre'] ?></td>
-                                        <td><img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="Picture" style="height: 40px"></td>
+                                        <td><img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="sin imagen" style="height: 40px"></td>
                                         <td><?php echo $producto['descuento']==null?$producto['precio']:$producto['precio']." -".$producto['descuento']."%" ?></td>
                                         <td><?php echo $producto['formato'] ?></td> 
                                         <td><?php echo $producto['stock'] ?></td>    

@@ -134,7 +134,7 @@
                     <div class="single-product-wrapper">
                         <a href="tienda/producto/<?php echo $producto['id'] ?>">
                             <div class="product-img">
-                                <img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="">
+                                <img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="sin imagen">
                             </div>
                         </a>
                         <div class="product-description d-flex align-items-center justify-content-between">

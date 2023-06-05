@@ -156,7 +156,7 @@ class FrontController {
 
                 Route::add('/productos/view/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->view($id);
                         }
                         , 'get');
@@ -164,7 +164,7 @@ class FrontController {
             if (strpos($_SESSION['permisos']['productos'], 'd') !== false) {
                 Route::add('/productos/delete/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->delete($id);
                         }
                         , 'get');
@@ -172,35 +172,35 @@ class FrontController {
             if (strpos($_SESSION['permisos']['productos'], 'w') !== false) {
                 Route::add('/productos/edit/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->mostrarEdit($id);
                         }
                         , 'get');
 
                 Route::add('/productos/edit/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->edit($id);
                         }
                         , 'post');
 
                 Route::add('/productos/add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->mostrarAdd();
                         }
                         , 'get');
 
                 Route::add('/productos/add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->add();
                         }
                         , 'post');
 
                 Route::add('/productos/cant_add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->cant_add();
                         }
                         , 'get');
