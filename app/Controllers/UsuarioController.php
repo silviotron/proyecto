@@ -68,6 +68,22 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         $this->view->showViews(array('templates/header.view.php','templates/left-menu.view.php', 'perfil.view.php', 'templates/footer.view.php'), $data);
     }
     
+    function mostrarAdd() {
+        $data = array(
+            'seccion' => '/usuarios',
+            'titulo' => 'Usuarios',
+            'breadcrumb' => ['Add']
+        );
+
+        $roleModel = new \Com\Daw2\Models\RoleModel();
+        $data['roles'] = $roleModel->getAll();
+
+        $estadosModel = new \Com\Daw2\Models\EstadosModel();
+        $data['estados'] = $estadosModel->getAll();
+
+        $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
+    }
+    
 
     
 

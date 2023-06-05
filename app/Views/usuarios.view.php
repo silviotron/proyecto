@@ -13,8 +13,10 @@
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
-
                 <div class="card">
+                    <div class="m-0 font-weight-bold justify-content-end">
+                        <a href="/usuarios/add/" class="btn btn-primary ml-1 float-right" style="margin: 10px"> Nuevo usuario <i class="bi bi-plus"></i></a>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">Usuarios</h5>
                         <table id="tabladatos" class="table table-striped">                    

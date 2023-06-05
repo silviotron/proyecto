@@ -19,9 +19,9 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
 
     function mostrarAdd() {
         $data = array(
-            'seccion' => '/usuarios',
-            'titulo' => 'Usuarios',
-            'breadcrumb' => ['Usuarios']
+            'seccion' => '/productos',
+            'titulo' => 'Productos',
+            'breadcrumb' => ['Add']
         );
 
         $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
@@ -75,6 +75,11 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 header('location: /productos');
             }
         } else {
+            $data = array(
+                'seccion' => '/productos',
+                'titulo' => 'Productos',
+                'breadcrumb' => ['Add']
+            );
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['input']['imagen'] = $_FILES['imagen'];
             $data['errores'] = $errores;
@@ -94,18 +99,16 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
 
     function mostrarEdit(string $id) {
         $data = array(
-            'seccion' => '/usuarios',
-            'titulo' => 'Usuarios',
-            'breadcrumb' => ['Usuarios']
+            'seccion' => '/productos',
+            'titulo' => 'Productos',
+            'breadcrumb' => ['Edit']
         );
         $modelo = new \Com\Daw2\Models\ProductoModel();
         $input = $modelo->get($id);
         if (is_null($input)) {
             header('location: /productos');
         } else {
-            $data['titulo'] = 'Editando producto: ' . $input['nombre'];
-            $data['tituloDiv'] = 'Modificar producto';
-            $data['seccion'] = '/productos/edit';
+            $data['tituloDiv'] = 'Editando producto: ' . $input['nombre'];
 
             $data['input'] = $input;
 
@@ -130,7 +133,6 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
             $_POST['id'] = $id;
             $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             if ($modelo->update($saneado)) {
-                var_dump($_FILES['imagen']["error"] == 0);
                 if ($_FILES['imagen']["error"] == 0) {
                     $target_dir = "assets/images/product/";
                     $target_file = $target_dir . basename($id . '.jpg');
@@ -138,6 +140,11 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 }
                 header('location: /productos');
             } else {
+                $data = array(
+                    'seccion' => '/productos',
+                    'titulo' => 'Productos',
+                    'breadcrumb' => ['Edit']
+                );
                 $data['errores'] = ['codigo' => 'Error indeterminado al realizar el guardado'];
 
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -154,6 +161,11 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.producto.view.php', 'templates/footer.view.php'), $data);
             }
         } else {
+            $data = array(
+                'seccion' => '/productos',
+                'titulo' => 'Productos',
+                'breadcrumb' => ['Edit']
+            );
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['errores'] = $errores;
 
