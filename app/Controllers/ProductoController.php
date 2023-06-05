@@ -63,7 +63,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
             $_POST['descuento'] = '0';
         }
         $_POST['imagen'] = $_FILES['imagen'];
-        $errores = $this->checkForm($_POST);
+        $errores = $this->checkForm($_POST, true);
         if (count($errores) == 0) {
             $modelo = new \Com\Daw2\Models\ProductoModel();
             $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -92,12 +92,89 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
         }
     }
 
-    private function checkForm(array $post, bool $alta = true) {
+    function mostrarEdit(string $id) {
+        $data = array(
+            'seccion' => '/usuarios',
+            'titulo' => 'Usuarios',
+            'breadcrumb' => ['Usuarios']
+        );
+        $modelo = new \Com\Daw2\Models\ProductoModel();
+        $input = $modelo->get($id);
+        if (is_null($input)) {
+            header('location: /productos');
+        } else {
+            $data['titulo'] = 'Editando producto: ' . $input['nombre'];
+            $data['tituloDiv'] = 'Modificar producto';
+            $data['seccion'] = '/productos/edit';
+
+            $data['input'] = $input;
+
+            $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
+            $data['categorias'] = $categoriaModel->getAll();
+
+            $marcaModel = new \Com\Daw2\Models\MarcaModel();
+            $data['marcas'] = $marcaModel->getAll();
+
+            $precioModel = new \Com\Daw2\Models\PrecioModel();
+            $data['precios'] = $precioModel->getAll();
+
+            $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.producto.view.php', 'templates/footer.view.php'), $data);
+        }
+    }
+
+    function edit(string $id) {
+        $_POST['imagen'] = $_FILES['imagen'];
+        $errores = $this->checkForm($_POST, false);
+        if (count($errores) == 0) {
+            $modelo = new \Com\Daw2\Models\ProductoModel();
+            $_POST['id'] = $id;
+            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            if ($modelo->update($saneado)) {
+                var_dump($_FILES['imagen']["error"] == 0);
+                if ($_FILES['imagen']["error"] == 0) {
+                    $target_dir = "assets/images/product/";
+                    $target_file = $target_dir . basename($id . '.jpg');
+                    move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
+                }
+                header('location: /productos');
+            } else {
+                $data['errores'] = ['codigo' => 'Error indeterminado al realizar el guardado'];
+
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['errores'] = $errores;
+
+                $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
+                $data['categorias'] = $categoriaModel->getAll();
+
+                $marcaModel = new \Com\Daw2\Models\MarcaModel();
+                $data['marcas'] = $marcaModel->getAll();
+
+                $precioModel = new \Com\Daw2\Models\PrecioModel();
+                $data['precios'] = $precioModel->getAll();
+                $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.producto.view.php', 'templates/footer.view.php'), $data);
+            }
+        } else {
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['errores'] = $errores;
+
+            $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
+            $data['categorias'] = $categoriaModel->getAll();
+
+            $marcaModel = new \Com\Daw2\Models\MarcaModel();
+            $data['marcas'] = $marcaModel->getAll();
+
+            $precioModel = new \Com\Daw2\Models\PrecioModel();
+            $data['precios'] = $precioModel->getAll();
+            $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.producto.view.php', 'templates/footer.view.php'), $data);
+        }
+    }
+
+    private function checkForm(array $post, bool $alta) {
         $errores = [];
         if ($post['nombre'] == '') {
             $errores['nombre'] = 'Debe insertar un nombre al producto.';
-        } else if (strlen($post['nombre']) > 50) {
-            $errores['nombre'] = 'El nombre debe tener una longitud máxima de 50 caracteres.';
+        } else if (strlen($post['nombre']) > 100) {
+            $errores['nombre'] = 'El nombre debe tener una longitud máxima de 100 caracteres.';
         }
 
         if (!is_numeric($post['precio'])) {
@@ -130,19 +207,20 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
         if (!$precioModel->exists($post['tipo'])) {
             $errores['tipo'] = 'el tipo de precio seleccionada no existe.';
         }
-
-        if ($post["imagen"]["error"] == 0) {
-            $allowedExtensions = ['jpg', 'jpeg', 'png'];
-            $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
-            if (getimagesize($post["imagen"]["tmp_name"]) == false) {
-                $errores['imagen'] = "File is not an image.";
-            } else if ($post["imagen"]["size"] > 500000) {
-                $errores['imagen'] = "Sorry, your file is too large.";
-            } else if (!in_array($extension, $allowedExtensions)) {
-                $errores['imagen'] = "Sorry, file extension $extension is not allowed.";
+        if ($alta || $post["imagen"]["error"] == 0) {
+            if ($post["imagen"]["error"] == 0) {
+                $allowedExtensions = ['jpg', 'jpeg', 'png'];
+                $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
+                if (getimagesize($post["imagen"]["tmp_name"]) == false) {
+                    $errores['imagen'] = "El archivo no es una imagen.";
+                } else if ($post["imagen"]["size"] > 5000000) {
+                    $errores['imagen'] = "No se permiten imagenes de mas de 5 MB.";
+                } else if (!in_array($extension, $allowedExtensions)) {
+                    $errores['imagen'] = "La extension $extension no esta permitida.";
+                }
+            } else if ($post["imagen"]["error"] == 4) {
+                $errores['imagen'] = "selecciona una imagen.";
             }
-        } else if($post["imagen"]["error"] == 4)  {
-             $errores['imagen'] = "selecciona una imagen.";
         }
 
         return $errores;

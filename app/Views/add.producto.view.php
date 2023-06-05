@@ -16,9 +16,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Producto</h5>
+                        <h5 class="card-title">Producto <?php echo isset($input['id']) ? ' -  '.$input['id'] : ''; ?></h5>
 
-                        <form class="row g-3" method="post" action="/productos/add" enctype="multipart/form-data">
+                        <form class="row g-3" method="post" enctype="multipart/form-data">
 
                             <div class="col-md-6">
                                 <div class="form-floating">
