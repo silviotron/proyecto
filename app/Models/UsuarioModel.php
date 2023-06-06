@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Com\Daw2\Models;
 
 class UsuarioModel extends \Com\Daw2\Core\BaseModel {
-    
+
     private const SELECT_SIMPLE = 'SELECT * FROM usuario';
     private const FROM = 'FROM usuario LEFT JOIN aux_estado_usuario ON aux_estado_usuario.id_estado = usuario.id_estado LEFT JOIN aux_rol ON aux_rol.id_rol = usuario.id_rol';
     private const SELECT_FROM = 'SELECT usuario.*, nombre_estado, aux_rol.nombre_rol ' . self::FROM;
@@ -14,7 +14,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     private const ORDER_DEFECTO = 0;
 
     function login($email, $pass) {
-        $stmt = $this->pdo->prepare(self::SELECT_FROM." WHERE usuario.email=?");
+        $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE usuario.email=?");
         $stmt->execute([$email]);
         if ($stmt->rowCount() > 0) {
             $userData = $stmt->fetchAll()[0];
@@ -32,7 +32,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     }
 
     function existsEmail($email): bool {
-        $stmt = $this->pdo->prepare(self::SELECT_SIMPLE." WHERE usuario.email=?");
+        $stmt = $this->pdo->prepare(self::SELECT_SIMPLE . " WHERE usuario.email=?");
         $stmt->execute([$email]);
         return $stmt->rowCount() > 0;
     }
@@ -47,8 +47,6 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         $stmt->execute([$id]);
         return $stmt->fetchAll()[0];
     }
-    
-
 
     public function insert(array $data): int {
         $sql = "INSERT INTO usuario (email, pass, id_rol, nombre, apellido, telefono , id_estado, direccion ) VALUES(:email, :pass, :rol, :nombre, :apellido, :telefono, :estado, :direccion)";
@@ -64,7 +62,19 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
-  
+    public function update(array $data): bool {
+        $sql = "UPDATE usuario SET email=:email, pass=:pass, id_rol=:rol, nombre=:nombre, apellido=:apellido, telefono=:telefono, id_estado=:estado, direccion=:direccion WHERE id_usuario=:id";
+        $stmt = $this->pdo->prepare($sql);
+        unset($data['enviar']);
+        unset($data['imagen']);
+        var_dump($data);
+        if ($stmt->execute($data)) {
+            return $stmt->rowCount() <= 1;
+        } else {
+            return false;
+        }
+    }
+
     public function delete(string $id): bool {
         $stmt = $this->pdo->prepare("DELETE FROM usuario WHERE id_usuario = ?");
         if ($stmt->execute([$id]) && $stmt->rowCount() == 1) {

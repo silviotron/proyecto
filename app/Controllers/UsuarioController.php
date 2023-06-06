@@ -47,26 +47,30 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         }
         return $permisos;
     }
-    
+
     function delete(string $id) {
-        if($_SESSION['usuario']['id_usuario'] == $id){
+        if ($_SESSION['usuario']['id_usuario'] == $id) {
             $_SESSION['mensajeUsuarios'] = array(
                 'class' => 'warning',
                 'texto' => 'No está permitido eliminarse a uno mismo.'
             );
-             header('Location: /usuarios');
-        }
-        else{
+            header('Location: /usuarios');
+        } else {
             $modelo = new \Com\Daw2\Models\UsuarioModel();
             $result = $modelo->delete($id);
             if ($result) {
+                $target_dir = "assets/images/user/";
+                $file = $target_dir . basename($id . '.jpg');
+                if (file_exists($file)) {
+                    unlink($file);
+                }
                 header('Location: /usuarios');
             } else {
                 $_SESSION['mensajeUsuarios'] = array(
                     'class' => 'warning',
                     'texto' => 'Error indeterminado al guardar.'
                 );
-                 header('Location: /usuarios');
+                header('Location: /usuarios');
             }
         }
     }
@@ -118,30 +122,107 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
                 $target_dir = "assets/images/user/";
                 $target_file = $target_dir . basename($id . '.jpg');
                 if ($_FILES['imagen']['error'] == 4) {
-                    copy($target_dir."avatar.jpg", $target_file);
-                } elseif ($_FILES['imagen']['error'] == 0) {
+                    copy($target_dir . "default.jpg", $target_file);
+                } else if ($_FILES['imagen']['error'] == 0) {
                     move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
                 }
                 header('location: /usuarios');
             }
         } else {
             $data = array(
+                'seccion' => '/usuarios',
+                'titulo' => 'Usuarios',
+                'breadcrumb' => ['Add']
+            );
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['errores'] = $errores;
+            unset($data['input']['imagen']);
+
+            $rolModel = new \Com\Daw2\Models\RolModel();
+            $data['roles'] = $rolModel->getAll();
+
+            $estadoModel = new \Com\Daw2\Models\EstadoModel();
+            $data['estados'] = $estadoModel->getAll();
+
+            $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
+        }
+    }
+
+    function mostrarEdit(string $id) {
+        $data = array(
             'seccion' => '/usuarios',
             'titulo' => 'Usuarios',
-            'breadcrumb' => ['Add']
+            'breadcrumb' => ['Edit']
         );
+        $modelo = new \Com\Daw2\Models\UsuarioModel();
+        $input = $modelo->get($id);
+        if (is_null($input)) {
+            header('location: /usuarios');
+        } else {
+            $data['tituloDiv'] = 'Editando usuario: ' . $input['nombre'];
+
+            $data['input'] = $input;
+            $data['input']['imagen'] = "assets/images/user/$id.jpg";
+
+            $rolModel = new \Com\Daw2\Models\RolModel();
+            $data['roles'] = $rolModel->getAll();
+
+            $estadoModel = new \Com\Daw2\Models\EstadoModel();
+            $data['estados'] = $estadoModel->getAll();
+
+            $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
+        }
+    }
+
+    function edit(string $id) {
+        $_POST['imagen'] = $_FILES['imagen'];
+        $errores = $this->checkForm($_POST, false);
+        if (count($errores) == 0) {
+            $modelo = new \Com\Daw2\Models\UsuarioModel();
+            $_POST['id'] = $id;
+            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            if ($modelo->update($saneado)) {
+                if ($_FILES['imagen']["error"] == 0) {
+                    $target_dir = "assets/images/user/";
+                    $target_file = $target_dir . basename($id . '.jpg');
+                    move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
+                }
+                header('location: /usuarios');
+            } else {
+                $data = array(
+                    'seccion' => '/usuarios',
+                    'titulo' => 'Usuarios',
+                    'breadcrumb' => ['Edit']
+                );
+                $data['errores'] = ['codigo' => 'Error indeterminado al realizar el guardado'];
+
+                $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                $data['errores'] = $errores;
+                $data['input']['imagen'] = "assets/images/user/$id.jpg";
+
+                $rolModel = new \Com\Daw2\Models\RolModel();
+                $data['roles'] = $rolModel->getAll();
+
+                $estadoModel = new \Com\Daw2\Models\EstadoModel();
+                $data['estados'] = $estadoModel->getAll();
+                $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
+            }
+        } else {
+            $data = array(
+                'seccion' => '/usuarios',
+                'titulo' => 'Usuarios',
+                'breadcrumb' => ['Edit']
+            );
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['input']['imagen'] = $_FILES['imagen'];
             $data['errores'] = $errores;
-        
+            $data['input']['imagen'] = "assets/images/user/$id.jpg";
 
-        $rolModel = new \Com\Daw2\Models\RolModel();
-        $data['roles'] = $rolModel->getAll();
+            $rolModel = new \Com\Daw2\Models\RolModel();
+            $data['roles'] = $rolModel->getAll();
 
-        $estadoModel = new \Com\Daw2\Models\EstadoModel();
-        $data['estados'] = $estadoModel->getAll();
-
-        $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
+            $estadoModel = new \Com\Daw2\Models\EstadoModel();
+            $data['estados'] = $estadoModel->getAll();
+            $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.usuario.view.php', 'templates/footer.view.php'), $data);
         }
     }
 
@@ -162,9 +243,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         } else if (strlen($post['nombre']) > 100) {
             $errores['nombre'] = 'El nombre debe tener una longitud máxima de 100 caracteres.';
         }
-        if ($post['apellido'] == '') {
-            $errores['apellido'] = 'El apellido es obligatorio';
-        } else if (strlen($post['apellido']) > 100) {
+        if (strlen($post['apellido']) > 100) {
             $errores['apellido'] = 'El apellido debe tener una longitud máxima de 100 caracteres.';
         }
 

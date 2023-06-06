@@ -83,7 +83,7 @@
                                 <input type="file" id="imagen" name="imagen" accept="image/*" hidden>
                                 <label   for="imagen" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></label>
                                 <i  id="remove-button" class="btn btn-danger btn-sm bi bi-trash"></i>
-                                <label for="imagen"><img style="max-width: 320px;height: 150px;object-fit: cover; margin-left: 5px" id="preview-image" src="assets/images/user/avatar.jpg" alt="Default Image"></label>
+                                <label for="imagen"><img style="max-width: 320px;height: 150px;object-fit: cover; margin-left: 5px" id="preview-image" src="<?php echo isset($input['imagen'])?$input['imagen']:'assets/images/user/default.jpg'; ?>" alt="Default Image"></label>
                                 <p class="text-danger"><?php echo isset($errores['imagen']) ? $errores['imagen'] : ''; ?></p>
                             </div>  
 
@@ -148,7 +148,7 @@
 
     document.getElementById('remove-button').addEventListener('click', function () {
         var imagePreview = document.getElementById('preview-image');
-        imagePreview.setAttribute("src", "assets/images/user/avatar.jpg");
+        imagePreview.setAttribute("src", '<?php echo isset($input['imagen'])?$input['imagen']:'assets/images/user/default.jpg'; ?>');
         document.getElementById('imagen').value = "";
     });
 </script>

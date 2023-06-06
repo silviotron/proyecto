@@ -72,7 +72,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 $target_dir = "assets/images/product/";
                 $target_file = $target_dir . basename($id . '.jpg');
                 if ($_FILES['imagen']['error'] == 4) {
-                    copy($target_dir."default.jpg", $target_file);
+                    copy($target_dir . "default.jpg", $target_file);
                 } elseif ($_FILES['imagen']['error'] == 0) {
                     move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
                 }
@@ -85,9 +85,9 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 'breadcrumb' => ['Add']
             );
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
-            $data['input']['imagen'] = $_FILES['imagen'];
+            
             $data['errores'] = $errores;
-            $data['_FILES'] = $_FILES;
+            $data['input']['imagen'] = "assets/images/product/$id.jpg";
 
             $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
             $data['categorias'] = $categoriaModel->getAll();
@@ -115,7 +115,8 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
             $data['tituloDiv'] = 'Editando producto: ' . $input['nombre'];
 
             $data['input'] = $input;
-
+            $data['input']['imagen'] = "assets/images/product/$id.jpg";
+            
             $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
             $data['categorias'] = $categoriaModel->getAll();
 
@@ -153,6 +154,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
 
                 $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
                 $data['errores'] = $errores;
+                $data['input']['imagen'] = "assets/images/product/$id.jpg";
 
                 $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
                 $data['categorias'] = $categoriaModel->getAll();
@@ -223,18 +225,18 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
         if (!$precioModel->exists($post['tipo'])) {
             $errores['tipo'] = 'el tipo de precio seleccionada no existe.';
         }
-            if ($post["imagen"]["error"] == 0) {
-                $allowedExtensions = ['jpg', 'jpeg', 'png'];
-                $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
-                if (getimagesize($post["imagen"]["tmp_name"]) == false) {
-                    $errores['imagen'] = "El archivo no es una imagen.";
-                } else if ($post["imagen"]["size"] > 5000000) {
-                    $errores['imagen'] = "No se permiten imagenes de mas de 5 MB.";
-                } else if (!in_array($extension, $allowedExtensions)) {
-                    $errores['imagen'] = "La extension $extension no esta permitida.";
-                }
+        if ($post["imagen"]["error"] == 0) {
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
+            if (getimagesize($post["imagen"]["tmp_name"]) == false) {
+                $errores['imagen'] = "El archivo no es una imagen.";
+            } else if ($post["imagen"]["size"] > 5000000) {
+                $errores['imagen'] = "No se permiten imagenes de mas de 5 MB.";
+            } else if (!in_array($extension, $allowedExtensions)) {
+                $errores['imagen'] = "La extension $extension no esta permitida.";
             }
-        
+        }
+
 
         return $errores;
     }
