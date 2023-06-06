@@ -16,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Producto <?php echo isset($input['id']) ? ' -  '.$input['id'] : ''; ?></h5>
+                        <h5 class="card-title">Producto <?php echo isset($input['id']) ? ' -  ' . $input['id'] : ''; ?></h5>
 
                         <form class="row g-3" method="post" enctype="multipart/form-data">
 
@@ -32,7 +32,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="marca" name="marca" aria-label="Marca">
                                         <?php foreach ($marcas as $e) { ?>
-                                        <option value="<?php echo $e['id_marca']; ?>" <?php echo isset($input['marca'])&&$input['marca']==$e['id_marca'] ? 'selected' : ''; ?>><?php echo $e['nombre_marca']; ?></option>
+                                            <option value="<?php echo $e['id_marca']; ?>" <?php echo isset($input['marca']) && $input['marca'] == $e['id_marca'] ? 'selected' : ''; ?>><?php echo $e['nombre_marca']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="marca">Marca</label>
@@ -44,7 +44,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="categoria" name="categoria" aria-label="Categoria">
                                         <?php foreach ($categorias as $e) { ?>
-                                        <option value="<?php echo $e['id_categoria']; ?>" <?php echo isset($input['categoria'])&&$input['categoria']==$e['id_categoria'] ? 'selected' : ''; ?>><?php echo $e['nombre_categoria']; ?></option>
+                                            <option value="<?php echo $e['id_categoria']; ?>" <?php echo isset($input['categoria']) && $input['categoria'] == $e['id_categoria'] ? 'selected' : ''; ?>><?php echo $e['nombre_categoria']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="categoria">Categoria</label>
@@ -64,7 +64,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="tipo" name="tipo" aria-label="Tipo">
                                         <?php foreach ($precios as $e) { ?>
-                                        <option value="<?php echo $e['id']; ?>" <?php echo isset($input['tipo'])&&$input['tipo']==$e['id'] ? 'selected' : ''; ?>><?php echo $e['formato']; ?></option>
+                                            <option value="<?php echo $e['id']; ?>" <?php echo isset($input['tipo']) && $input['tipo'] == $e['id'] ? 'selected' : ''; ?>><?php echo $e['formato']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="tipo">Tipo</label>
@@ -78,39 +78,42 @@
                                     <label for="stock">Stock</label>
                                 </div>
                                 <p class="text-danger"><?php echo isset($errores['stock']) ? $errores['stock'] : ''; ?></p>
-                            </div>
+                            </div>                                                 
 
-                            <div class="col-md-8">
-                                <label for="imagen">Imagen</label>
-                                <input class="form-control" type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+                            <div class="col-md-4" style="overflow: hidden">
+                                <input type="file" id="imagen" name="imagen" accept="image/*" hidden>
+                                <label   for="imagen" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></label>
+                                <i  id="remove-button" class="btn btn-danger btn-sm bi bi-trash"></i>
+                                <label for="imagen"><img style="max-width: 450px;height: 300px;object-fit: cover; margin-left: 5px" id="preview-image" src="assets/images/product/default.jpg" alt="Default Image"></label>
                                 <p class="text-danger"><?php echo isset($errores['imagen']) ? $errores['imagen'] : ''; ?></p>
-                            </div>
+                            </div>  
 
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <textarea class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" style="height: 300px;" ><?php echo isset($input['descripcion']) ? $input['descripcion'] : ''; ?></textarea>
+                                    <label for="descripcion">Descripción</label>
+                                </div>
+                                <p class="text-danger"><?php echo isset($errores['descripcion']) ? $errores['descripcion'] : ''; ?></p>
+                            </div>
+                            
                             <div class="col-md-2">
+                                <div class="row">
+                                    <label for="descuento">Descuento</label>
+                                    <div class="input-group col-md-2 mb-3">
+                                        <input type="text" class="form-control" id="descuento" name="descuento" aria-label="descuento" value="<?php echo isset($input['descuento']) ? $input['descuento'] : ''; ?>">
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <p class="text-danger"><?php echo isset($errores['descuento']) ? $errores['descuento'] : ''; ?></p>
+                                </div>
                                 <label for="precio">Precio</label>
                                 <div class="input-group col-md-2 mb-3">
                                     <input type="text" class="form-control" id="precio" name="precio" aria-label="precio" value="<?php echo isset($input['precio']) ? $input['precio'] : ''; ?>">
                                     <span class="input-group-text">€</span>
                                 </div>
                                 <p class="text-danger"><?php echo isset($errores['precio']) ? $errores['precio'] : ''; ?></p>
-                            </div>
+                            </div>     
 
-                            <div class="col-md-2">
-                                <label for="descuento">Descuento</label>
-                                <div class="input-group col-md-2 mb-3">
-                                    <input type="text" class="form-control" id="descuento" name="descuento" aria-label="descuento" value="<?php echo isset($input['descuento']) ? $input['descuento'] : ''; ?>">
-                                    <span class="input-group-text">%</span>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['descuento']) ? $errores['descuento'] : ''; ?></p>
-                            </div>
 
-                            <div class="col-12">
-                                <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" style="height: 100px;" ><?php echo isset($input['descripcion']) ? $input['descripcion'] : ''; ?></textarea>
-                                    <label for="descripcion">Descripción</label>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['descripcion']) ? $errores['descripcion'] : ''; ?></p>
-                            </div>
 
                             <div class="text-center">
                                 <button type="submit" value="Enviar" name="enviar" class="btn btn-primary">Enviar</button>
@@ -126,3 +129,22 @@
     </section>
 
 </main>
+<script>
+    document.getElementById('imagen').addEventListener('change', function () {
+        var file = this.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var imagePreview = document.getElementById('preview-image');
+            imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('remove-button').addEventListener('click', function () {
+        var imagePreview = document.getElementById('preview-image');
+        imagePreview.setAttribute("src", "assets/images/product/default.jpg");
+        document.getElementById('imagen').value = "";
+    });
+</script>

@@ -71,7 +71,11 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
             if ($id != -1) {
                 $target_dir = "assets/images/product/";
                 $target_file = $target_dir . basename($id . '.jpg');
-                move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
+                if ($_FILES['imagen']['error'] == 4) {
+                    copy($target_dir."default.jpg", $target_file);
+                } elseif ($_FILES['imagen']['error'] == 0) {
+                    move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
+                }
                 header('location: /productos');
             }
         } else {
@@ -219,7 +223,6 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
         if (!$precioModel->exists($post['tipo'])) {
             $errores['tipo'] = 'el tipo de precio seleccionada no existe.';
         }
-        if ($alta || $post["imagen"]["error"] == 0) {
             if ($post["imagen"]["error"] == 0) {
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
                 $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
@@ -230,10 +233,8 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 } else if (!in_array($extension, $allowedExtensions)) {
                     $errores['imagen'] = "La extension $extension no esta permitida.";
                 }
-            } else if ($post["imagen"]["error"] == 4) {
-                $errores['imagen'] = "selecciona una imagen.";
             }
-        }
+        
 
         return $errores;
     }
