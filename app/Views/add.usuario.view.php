@@ -1,11 +1,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Productos</h1>
+        <h1>Usuarios</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item "><a href="/productos">Productos</a></li>
+                <li class="breadcrumb-item "><a href="/usuarios">Usuarios</a></li>
                 <li class="breadcrumb-item active"><?php echo isset($breadcrumb[0]) ? $breadcrumb[0] : ''; ?></li>
             </ol>
         </nav>
@@ -16,100 +16,83 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Usuario <?php echo isset($input['id']) ? ' -  '.$input['id'] : ''; ?></h5>
+                        <h5 class="card-title">Usuario <?php echo isset($input['id']) ? ' -  ' . $input['id'] : ''; ?></h5>
 
                         <form class="row g-3" method="post" enctype="multipart/form-data">
+                            <div class="col-md-7">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo isset($input['email']) ? $input['email'] : ''; ?>">
+                                    <label for="email">Email</label>
+                                </div>
+                                <p class="text-danger"><?php echo isset($errores['email']) ? $errores['email'] : ''; ?></p>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating">
+                                    <input type="password" class="form-control" id="pass" name="pass" placeholder="Contraseña" value="<?php echo isset($input['pass']) ? $input['pass'] : ''; ?>">
+                                    <label for="pass">Contraseña</label>
+                                    <i style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="mostrar contraseña" id="toggleIcon" onclick="togglePassword()" class="bi bi-eye"></i> 
+                                </div>
+                                <p class="text-danger"><?php echo isset($errores['pass']) ? $errores['pass'] : ''; ?></p>
+                            </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-2">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="rol" name="rol" aria-label="Rol">
+                                        <?php foreach ($roles as $e) { ?>
+                                            <option value="<?php echo $e['id_rol']; ?>" <?php echo isset($input['rol']) && $input['rol'] == $e['id_rol'] ? 'selected' : ''; ?>><?php echo $e['nombre_rol']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                    <label for="rol">Rol</label>
+                                </div>
+                                <p class="text-danger"><?php echo isset($errores['rol']) ? $errores['rol'] : ''; ?></p>
+                            </div>    
+                            <div class="col-md-3">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php echo isset($input['nombre']) ? $input['nombre'] : ''; ?>">
                                     <label for="nombre">Nombre</label>
                                 </div>
                                 <p class="text-danger"><?php echo isset($errores['nombre']) ? $errores['nombre'] : ''; ?></p>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="marca" name="marca" aria-label="Marca">
-                                        <?php foreach ($marcas as $e) { ?>
-                                        <option value="<?php echo $e['id_marca']; ?>" <?php echo isset($input['marca'])&&$input['marca']==$e['id_marca'] ? 'selected' : ''; ?>><?php echo $e['nombre_marca']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <label for="marca">Marca</label>
+                            <div class="col-md-5">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" value="<?php echo isset($input['apellido']) ? $input['apellido'] : ''; ?>">
+                                    <label for="apellido">Apellido</label>
                                 </div>
-                                <p class="text-danger"><?php echo isset($errores['marca']) ? $errores['marca'] : ''; ?></p>
+                                <p class="text-danger"><?php echo isset($errores['apellido']) ? $errores['apellido'] : ''; ?></p>
                             </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <select class="form-select" id="categoria" name="categoria" aria-label="Categoria">
-                                        <?php foreach ($categorias as $e) { ?>
-                                        <option value="<?php echo $e['id_categoria']; ?>" <?php echo isset($input['categoria'])&&$input['categoria']==$e['id_categoria'] ? 'selected' : ''; ?>><?php echo $e['nombre_categoria']; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    <label for="categoria">Categoria</label>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['categoria']) ? $errores['categoria'] : ''; ?></p>
-                            </div>
-
                             <div class="col-md-2">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="peso" name="peso" placeholder="Peso" value="<?php echo isset($input['peso']) ? $input['peso'] : ''; ?>">
-                                    <label for="peso">Peso</label>
+                                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono" value="<?php echo isset($input['telefono']) ? $input['telefono'] : ''; ?>">
+                                    <label for="telefono">Telefono</label>
                                 </div>
-                                <p class="text-danger"><?php echo isset($errores['peso']) ? $errores['peso'] : ''; ?></p>
+                                <p class="text-danger"><?php echo isset($errores['telefono']) ? $errores['telefono'] : ''; ?></p>
                             </div>
-
                             <div class="col-md-2">
                                 <div class="form-floating mb-3">
-                                    <select class="form-select" id="tipo" name="tipo" aria-label="Tipo">
-                                        <?php foreach ($precios as $e) { ?>
-                                        <option value="<?php echo $e['id']; ?>" <?php echo isset($input['tipo'])&&$input['tipo']==$e['id'] ? 'selected' : ''; ?>><?php echo $e['formato']; ?></option>
+                                    <select class="form-select" id="estado" name="estado" aria-label="Estado">
+                                        <?php foreach ($estados as $e) { ?>
+                                            <option value="<?php echo $e['id_estado']; ?>" <?php echo isset($input['estado']) && $input['estado'] == $e['id_estado'] ? 'selected' : ''; ?>><?php echo $e['nombre_estado']; ?></option>
                                         <?php } ?>
                                     </select>
-                                    <label for="tipo">Tipo</label>
+                                    <label for="estado">Estado</label>
                                 </div>
-                                <p class="text-danger"><?php echo isset($errores['tipo']) ? $errores['tipo'] : ''; ?></p>
-                            </div>
+                                <p class="text-danger"><?php echo isset($errores['estado']) ? $errores['estado'] : ''; ?></p>
+                            </div>    
 
-                            <div class="col-md-2">
-                                <div class="form-floating">
-                                    <input type="number" class="form-control" id="stock" name="stock" placeholder="Stock" value="<?php echo isset($input['stock']) ? $input['stock'] : ''; ?>">
-                                    <label for="stock">Stock</label>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['stock']) ? $errores['stock'] : ''; ?></p>
-                            </div>
-
-                            <div class="col-md-8">
-                                <label for="imagen">Imagen</label>
-                                <input class="form-control" type="file" id="imagen" name="imagen" accept="image/jpeg, image/png">
+                            <div class="col-md-3" style="overflow: hidden">
+                                <input type="file" id="imagen" name="imagen" accept="image/*" hidden>
+                                <label   for="imagen" class="btn btn-primary btn-sm"><i class="bi bi-upload"></i></label>
+                                <i  id="remove-button" class="btn btn-danger btn-sm bi bi-trash"></i>
+                                <label for="imagen"><img style="max-width: 320px;height: 150px;object-fit: cover; margin-left: 5px" id="preview-image" src="assets/images/user/avatar.jpg" alt="Default Image"></label>
                                 <p class="text-danger"><?php echo isset($errores['imagen']) ? $errores['imagen'] : ''; ?></p>
-                            </div>
+                            </div>  
 
-                            <div class="col-md-2">
-                                <label for="precio">Precio</label>
-                                <div class="input-group col-md-2 mb-3">
-                                    <input type="text" class="form-control" id="precio" name="precio" aria-label="precio" value="<?php echo isset($input['precio']) ? $input['precio'] : ''; ?>">
-                                    <span class="input-group-text">€</span>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['precio']) ? $errores['precio'] : ''; ?></p>
-                            </div>
-
-                            <div class="col-md-2">
-                                <label for="descuento">Descuento</label>
-                                <div class="input-group col-md-2 mb-3">
-                                    <input type="text" class="form-control" id="descuento" name="descuento" aria-label="descuento" value="<?php echo isset($input['descuento']) ? $input['descuento'] : ''; ?>">
-                                    <span class="input-group-text">%</span>
-                                </div>
-                                <p class="text-danger"><?php echo isset($errores['descuento']) ? $errores['descuento'] : ''; ?></p>
-                            </div>
-
-                            <div class="col-12">
+                            <div class="col-md-9">
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" style="height: 100px;" ><?php echo isset($input['descripcion']) ? $input['descripcion'] : ''; ?></textarea>
-                                    <label for="descripcion">Descripción</label>
+                                    <textarea class="form-control" placeholder="Dirección" name="direccion" id="direccion" style="height: 150px;" ><?php echo isset($input['direccion']) ? $input['direccion'] : ''; ?></textarea>
+                                    <label for="direccion">Dirección</label>
                                 </div>
-                                <p class="text-danger"><?php echo isset($errores['descripcion']) ? $errores['descripcion'] : ''; ?></p>
+                                <p class="text-danger"><?php echo isset($errores['direccion']) ? $errores['direccion'] : ''; ?></p>
                             </div>
 
                             <div class="text-center">
@@ -126,3 +109,46 @@
     </section>
 
 </main>
+<script>
+    function togglePassword() {
+        var passwordField = document.getElementById("pass");
+        var toggleIcon = document.getElementById("toggleIcon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.classList.remove("bi-eye");
+            toggleIcon.classList.add("bi-eye-slash");
+            toggleIcon.setAttribute("data-bs-original-title", "esconder contraseña");
+            var tooltipDivs = document.querySelectorAll('div.tooltip-inner');
+            for (var i = 0; i < tooltipDivs.length; i++) {
+                tooltipDivs[i].textContent = 'esconder contraseña';
+            }
+        } else {
+            passwordField.type = "password";
+            toggleIcon.classList.remove("bi-eye-slash");
+            toggleIcon.classList.add("bi-eye");
+            toggleIcon.setAttribute("data-bs-original-title", "mostrar contraseña");
+            var tooltipDivs = document.querySelectorAll('div.tooltip-inner');
+            for (var i = 0; i < tooltipDivs.length; i++) {
+                tooltipDivs[i].textContent = 'mostrar contraseña';
+            }
+        }
+    }
+    document.getElementById('imagen').addEventListener('change', function () {
+        var file = this.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var imagePreview = document.getElementById('preview-image');
+            imagePreview.src = e.target.result;
+        };
+
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('remove-button').addEventListener('click', function () {
+        var imagePreview = document.getElementById('preview-image');
+        imagePreview.setAttribute("src", "assets/images/user/avatar.jpg");
+        document.getElementById('imagen').value = "";
+    });
+</script>

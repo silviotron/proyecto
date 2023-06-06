@@ -34,7 +34,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     function existsEmail($email): bool {
         $stmt = $this->pdo->prepare(self::SELECT_SIMPLE." WHERE usuario.email=?");
         $stmt->execute([$email]);
-        return $stmt->rowCount() != 0;
+        return $stmt->rowCount() > 0;
     }
 
     function getAll(): array {
@@ -51,11 +51,11 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
 
 
     public function insert(array $data): int {
-        $sql = "INSERT INTO usuario (nombre, apellido, precio, descuento, stock, id_marca , id_categoria, id_tipo_precio ) VALUES(:nombre, :descripcion, :precio, :descuento, :stock, :marca, :categoria, :tipo)";
+        $sql = "INSERT INTO usuario (email, pass, id_rol, nombre, apellido, telefono , id_estado, direccion ) VALUES(:email, :pass, :rol, :nombre, :apellido, :telefono, :estado, :direccion)";
         $stmt = $this->pdo->prepare($sql);
         unset($data['enviar']);
         unset($data['imagen']);
-        unset($data['peso']);
+        $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
         var_dump($data);
         if ($stmt->execute($data)) {
             return (int) $this->pdo->lastInsertId();
@@ -64,10 +64,14 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
-    function delete(string $id): bool {
-        $stmt = $this->pdo->prepare('DELETE FROM usuario WHERE id_usuario=?');
-        $stmt->execute([$id]);
-        return $stmt->rowCount() == 1;
+  
+    public function delete(string $id): bool {
+        $stmt = $this->pdo->prepare("DELETE FROM usuario WHERE id_usuario = ?");
+        if ($stmt->execute([$id]) && $stmt->rowCount() == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function filterByString(string $stringValue, string $column): array {

@@ -56,7 +56,7 @@
                     <li class="nav-item dropdown pe-3">
 
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                            <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.webp" alt="Profile" class="rounded-circle">
+                            <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.jpg" alt="Profile" class="rounded-circle">
                             <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $_SESSION['usuario']['nombre'] ?></span>
                         </a><!-- End Profile Iamge Icon -->
 

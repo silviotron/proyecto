@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.webp" alt="Profile" class="rounded-circle">
+                        <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.jpg" alt="Profile" class="rounded-circle">
                         <h2><?php echo $_SESSION['usuario']['nombre'] ?></h2>
                         <h3><?php echo $_SESSION['usuario']['nombre_rol'] ?></h3>
                         <!-- <div class="social-links mt-2">
@@ -77,11 +77,7 @@
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label"> Email</div>
                                     <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['email'] ?></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label"> Nacionalidad</div>
-                                    <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['nacionalidad']!=null?$_SESSION['usuario']['nacionalidad']:"-" ?></div>
-                                </div>
+                                </div>                               
                                 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label"> Creacion</div>

@@ -11,7 +11,7 @@ class EstadoModel extends \Com\Daw2\Core\BaseModel {
         return $stmt->fetchAll();
     }
 
-    function exist($idRol): bool {
+    function exists($idRol): bool {
         $stmt = $this->pdo->prepare("SELECT * FROM aux_estado_usuario WHERE id_estado=?");
         $stmt->execute([$idRol]);
         return $stmt->rowCount() != 0;
