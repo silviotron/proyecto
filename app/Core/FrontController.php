@@ -104,7 +104,7 @@ class FrontController {
                 Route::add('/usuarios/delete/([A-Za-z0-9]+)',
                         function ($id) {
                             $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                            $controlador->de;
+                            $controlador->delete($id);
                         }
                         , 'get');
             }
