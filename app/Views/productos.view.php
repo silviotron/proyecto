@@ -25,8 +25,8 @@
                             <thead>
                                 <tr>   
                                     <th scope="col">#</th>
-                                    <th scope="col">Nombre</th>   
                                     <th scope="col"></th>
+                                    <th scope="col">Nombre</th>   
                                     <th scope="col">Precio</th>
                                     <th scope="col">Formato</th>
                                     <th scope="col">Stock</th>                            
@@ -37,8 +37,8 @@
                                 <?php foreach ($productos as $producto) { ?>                        
                                     <tr >
                                         <th scope="row"><?php echo $producto['id'] ?></th>
-                                        <td><?php echo $producto['nombre'] ?></td>
                                         <td><img src="assets/images/product/<?php echo $producto['id'] ?>.jpg" alt="sin imagen" style="height: 40px"></td>
+                                        <td><?php echo $producto['nombre'] ?></td>
                                         <td><?php echo $producto['descuento'] == null ? $producto['precio'] : $producto['precio'] . " -" . $producto['descuento'] . "%" ?></td>
                                         <td><?php echo $producto['formato'] ?></td> 
                                         <td><?php echo $producto['stock'] ?></td>    

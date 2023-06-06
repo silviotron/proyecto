@@ -45,7 +45,9 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     function get(string $id) {
         $stmt = $this->pdo->prepare(self::SELECT_FROM . " WHERE usuario.id_usuario=?");
         $stmt->execute([$id]);
-        return $stmt->fetchAll()[0];
+        $data = $stmt->fetchAll()[0];
+        unset($data['pass']);
+        return $data;
     }
 
     public function insert(array $data): int {
@@ -54,7 +56,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         unset($data['enviar']);
         unset($data['imagen']);
         $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
-        var_dump($data);
+        
         if ($stmt->execute($data)) {
             return (int) $this->pdo->lastInsertId();
         } else {
@@ -63,10 +65,18 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     }
 
     public function update(array $data): bool {
-        $sql = "UPDATE usuario SET email=:email, pass=:pass, id_rol=:rol, nombre=:nombre, apellido=:apellido, telefono=:telefono, id_estado=:estado, direccion=:direccion WHERE id_usuario=:id";
+        if ($data['pass'] == '') {
+            $tempo = ''; 
+            unset($data['pass']);
+        }else{
+            $tempo = ', pass=:pass'; 
+            $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
+        }
+        var_dump($data);
+        $sql = "UPDATE usuario SET email=:email $tempo, id_rol=:rol, nombre=:nombre, apellido=:apellido, telefono=:telefono, id_estado=:estado, direccion=:direccion WHERE id_usuario=:id";
         $stmt = $this->pdo->prepare($sql);
         unset($data['enviar']);
-        unset($data['imagen']);
+        unset($data['imagen']);        
         var_dump($data);
         if ($stmt->execute($data)) {
             return $stmt->rowCount() <= 1;

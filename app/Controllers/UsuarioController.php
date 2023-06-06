@@ -229,17 +229,29 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
     private function checkForm(array $post, bool $alta) {
         $errores = [];
         if (empty($post['email'])) {
-            $errores['email'] = "Campo obligatorio";
+            $errores['email'] = "Campo obligatorio.";
         } else if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
-            $errores['email'] = 'Inserte un email válido';
+            $errores['email'] = 'Inserte un email válido.';
         } else if ($alta) {
             $userModel = new \Com\Daw2\Models\UsuarioModel();
             if ($userModel->existsEmail($post['email'])) {
-                $errores['email'] = 'El email seleccionado ya está en uso';
+                $errores['email'] = 'El email seleccionado ya está en uso.';
             }
         }
+        if ($alta || $post['pass'] != ''){
+            if ($post['pass'] == '') {
+                $errores['pass'] = 'Introduce una contraseña.';
+            } else if (preg_match('/\s+/', $post['pass'])) {
+                $errores['pass'] = 'La contraseña no puede contener espacios.';
+            }else if (strlen($post['pass']) < 5) {
+                $errores['pass'] = "La contraseña debe contener al menos 5 caracteres.";
+            }else if(strlen($post['pass']) > 100){
+                $errores['pass'] = 'La contraseña no puede tener mas de 100 caracteres.';
+            }
+            
+        }
         if ($post['nombre'] == '') {
-            $errores['nombre'] = 'El nombre es obligatorio';
+            $errores['nombre'] = 'El nombre es obligatorio.';
         } else if (strlen($post['nombre']) > 100) {
             $errores['nombre'] = 'El nombre debe tener una longitud máxima de 100 caracteres.';
         }
@@ -248,7 +260,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         }
 
         if ($post['telefono'] != '' && preg_match('/^[0-9]{9}$/', str_replace(' ', '', $post['telefono']))) {
-            $errores['telefono'] = 'Introduce un telefono de 9 digitos';
+            $errores['telefono'] = 'Introduce un telefono de 9 digitos.';
         }
 
         if (strlen($post['direccion']) > 500) {
