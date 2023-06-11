@@ -32,7 +32,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="marca" name="marca" aria-label="Marca">
                                         <?php foreach ($marcas as $e) { ?>
-                                            <option value="<?php echo $e['id_marca']; ?>" <?php echo isset($input['marca']) && $input['marca'] == $e['id_marca'] ? 'selected' : ''; ?>><?php echo $e['nombre_marca']; ?></option>
+                                            <option value="<?php echo $e['id_marca']; ?>" <?php echo isset($input['id_marca']) && $input['id_marca'] == $e['id_marca'] ? 'selected' : ''; ?>><?php echo $e['nombre_marca']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="marca">Marca</label>
@@ -44,7 +44,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="categoria" name="categoria" aria-label="Categoria">
                                         <?php foreach ($categorias as $e) { ?>
-                                            <option value="<?php echo $e['id_categoria']; ?>" <?php echo isset($input['categoria']) && $input['categoria'] == $e['id_categoria'] ? 'selected' : ''; ?>><?php echo $e['nombre_categoria']; ?></option>
+                                            <option value="<?php echo $e['id_categoria']; ?>" <?php echo isset($input['id_categoria']) && $input['id_categoria'] == $e['id_categoria'] ? 'selected' : ''; ?>><?php echo $e['nombre_categoria']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="categoria">Categoria</label>
@@ -64,7 +64,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="tipo" name="tipo" aria-label="Tipo">
                                         <?php foreach ($precios as $e) { ?>
-                                            <option value="<?php echo $e['id']; ?>" <?php echo isset($input['tipo']) && $input['tipo'] == $e['id'] ? 'selected' : ''; ?>><?php echo $e['formato']; ?></option>
+                                            <option value="<?php echo $e['id']; ?>" <?php echo isset($input['id_tipo_precio']) && $input['id_tipo_precio'] == $e['id'] ? 'selected' : ''; ?>><?php echo $e['formato']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="tipo">Tipo</label>
@@ -88,7 +88,7 @@
                                 <p class="text-danger"><?php echo isset($errores['imagen']) ? $errores['imagen'] : ''; ?></p>
                             </div>  
 
-                            <div class="col-6">
+                            <div class="col-md-6">
                                 <div class="form-floating">
                                     <textarea class="form-control" placeholder="Descripcion" name="descripcion" id="descripcion" style="height: 300px;" ><?php echo isset($input['descripcion']) ? $input['descripcion'] : ''; ?></textarea>
                                     <label for="descripcion">Descripción</label>
@@ -100,14 +100,14 @@
                                 <div class="row">
                                     <label for="descuento">Descuento</label>
                                     <div class="input-group col-md-2 mb-3">
-                                        <input type="text" class="form-control" id="descuento" name="descuento" aria-label="descuento" value="<?php echo isset($input['descuento']) ? $input['descuento'] : ''; ?>">
+                                        <input style="text-align: right" type="text" class="form-control" id="descuento" name="descuento" aria-label="descuento" value="<?php echo isset($input['descuento']) ? $input['descuento'] : ''; ?>">
                                         <span class="input-group-text">%</span>
                                     </div>
                                     <p class="text-danger"><?php echo isset($errores['descuento']) ? $errores['descuento'] : ''; ?></p>
                                 </div>
                                 <label for="precio">Precio</label>
                                 <div class="input-group col-md-2 mb-3">
-                                    <input type="text" class="form-control" id="precio" name="precio" aria-label="precio" value="<?php echo isset($input['precio']) ? $input['precio'] : ''; ?>">
+                                    <input style="text-align: right" type="text" class="form-control" id="precio" name="precio" aria-label="precio" value="<?php echo isset($input['precio']) ? $input['precio'] : ''; ?>">
                                     <span class="input-group-text">€</span>
                                 </div>
                                 <p class="text-danger"><?php echo isset($errores['precio']) ? $errores['precio'] : ''; ?></p>

@@ -160,7 +160,6 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             header('location: /usuarios');
         } else {
             $data['tituloDiv'] = 'Editando usuario: ' . $input['nombre'];
-
             $data['input'] = $input;
             $data['input']['imagen'] = "assets/images/user/$id.jpg";
 

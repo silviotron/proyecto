@@ -1,4 +1,3 @@
-
 <div class="shop_sidebar_area">
 
     <div class="widget catagory mb-50">
@@ -8,7 +7,7 @@
         <div class="catagories-menu">
             <ul>
                 <li class="active"><a href="#">Todo</a></li>
-                <li ><a href="#">Categoría 1</a></li>
+                <li><a href="#">Categoría 1</a></li>
                 <li><a href="#">Categoría 2</a></li>
                 <li><a href="#">Categoría 3</a></li>
                 <li><a href="#">Categoría 4</a></li>
@@ -73,9 +72,7 @@
         <h6 class="widget-title mb-30">Price</h6>
         <div class="widget-desc">
             <div class="slider-range">
-                <div data-min="10" data-max="1000" data-unit="$"
-                     class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"
-                     data-value-min="10" data-value-max="1000" data-label-result="">
+                <div data-min="10" data-max="1000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="10" data-value-max="1000" data-label-result="">
                     <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
                     <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                     <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
@@ -129,7 +126,7 @@
             <?php
             //var_dump($productos);
             foreach ($productos as $producto) {
-                ?>
+            ?>
                 <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                     <div class="single-product-wrapper">
                         <a href="tienda/producto/<?php echo $producto['id'] ?>">
@@ -148,7 +145,7 @@
                             </div>
 
                             <div class="ratings-cart text-right">
-                                <div class="ratings">
+                                <div class="ratings" style="visibility: hidden;">
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -162,7 +159,7 @@
                         </div>
                     </div>
                 </div>
-<?php } ?>
+            <?php } ?>
 
 
         </div>
@@ -182,4 +179,3 @@
     </div>
 </div>
 </div>
-

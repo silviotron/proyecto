@@ -275,15 +275,7 @@ class FrontController {
 
             Route::pathNotFound(
                     function () {
-                        $controller = new \Com\Daw2\Controllers\ErroresController();
-                        $controller->error404();
-                    }
-            );
-
-            Route::methodNotAllowed(
-                    function () {
-                        $controller = new \Com\Daw2\Controllers\ErroresController();
-                        $controller->error405();
+                        header('location: /');
                     }
             );
         }

@@ -39,7 +39,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="rol" name="rol" aria-label="Rol">
                                         <?php foreach ($roles as $e) { ?>
-                                            <option value="<?php echo $e['id_rol']; ?>" <?php echo isset($input['rol']) && $input['rol'] == $e['id_rol'] ? 'selected' : ''; ?>><?php echo $e['nombre_rol']; ?></option>
+                                            <option value="<?php echo $e['id_rol']; ?>" <?php echo isset($input['id_rol']) && $input['id_rol'] == $e['id_rol'] ? 'selected' : ''; ?>><?php echo $e['nombre_rol']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="rol">Rol</label>
@@ -71,7 +71,7 @@
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="estado" name="estado" aria-label="Estado">
                                         <?php foreach ($estados as $e) { ?>
-                                            <option value="<?php echo $e['id_estado']; ?>" <?php echo isset($input['estado']) && $input['estado'] == $e['id_estado'] ? 'selected' : ''; ?>><?php echo $e['nombre_estado']; ?></option>
+                                        <option value="<?php echo $e['id_estado']; ?>" <?php echo isset($input['id_estado']) && $input['id_estado'] == $e['id_estado'] ? 'selected' : ''; ?>><?php echo $e['nombre_estado']; ?></option>
                                         <?php } ?>
                                     </select>
                                     <label for="estado">Estado</label>
