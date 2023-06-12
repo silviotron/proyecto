@@ -1,11 +1,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Categorias</h1>
+        <h1>Marcas</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item "><a href="/categorias">Categorias</a></li>
+                <li class="breadcrumb-item "><a href="/marcas">Marcas</a></li>
                 <li class="breadcrumb-item active"><?php echo isset($breadcrumb[0]) ? $breadcrumb[0] : ''; ?></li>
             </ol>
         </nav>
@@ -16,7 +16,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Categoria <?php echo isset($input['id']) ? ' -  ' . $input['id'] : ''; ?></h5>
+                        <h5 class="card-title">Marca <?php echo isset($input['id']) ? ' -  ' . $input['id'] : ''; ?></h5>
 
                         <form class="row g-3" method="post">
 

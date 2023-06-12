@@ -14,12 +14,24 @@ class MarcaModel extends \Com\Daw2\Core\BaseModel {
     function get(string $id): array {
         $stmt = $this->pdo->prepare('SELECT * FROM aux_marca WHERE id_marca=?');
         $stmt->execute([$id]);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll()[0];
     }
 
     function exists(string $id): bool {
         $stmt = $this->pdo->prepare('SELECT id_marca FROM aux_marca WHERE id_marca=?');
         $stmt->execute([$id]);
+        return !empty($stmt->fetchAll());
+    }
+
+    function existsNombre(string $nombre): bool {
+        $stmt = $this->pdo->prepare('SELECT id_marca FROM aux_marca WHERE nombre_marca=?');
+        $stmt->execute([$nombre]);
+        return !empty($stmt->fetchAll());
+    }
+
+    function existsNombreEdit(string $id, string $nombre): bool {
+        $stmt = $this->pdo->prepare('SELECT id_marca FROM aux_marca WHERE nombre_marca=? AND id_marca!=?');
+        $stmt->execute([$nombre, $id]);
         return !empty($stmt->fetchAll());
     }
 
@@ -36,6 +48,8 @@ class MarcaModel extends \Com\Daw2\Core\BaseModel {
 
     function delete(string $id): int {
         try { #if there are products enroled to the provider returns 0
+            $stmt = $this->pdo->prepare('UPDATE producto SET id_marca=0 WHERE id_marca=?');
+            $stmt->execute([$id]);
             $stmt = $this->pdo->prepare('SELECT * FROM producto WHERE id_marca=?');
             $stmt->execute([$id]);
             if ($stmt->rowCount() > 0) {
@@ -69,6 +83,16 @@ class MarcaModel extends \Com\Daw2\Core\BaseModel {
         } catch (PDOException $ex) {
             echo "cant update for some reason: " . $ex->getMossage();
             return false;
+        }
+    }
+
+    public function insert(string $nombre): int {
+        $sql = 'INSERT INTO aux_marca(nombre_marca) values (?)';
+        $stmt = $this->pdo->prepare($sql);
+        if ($stmt->execute([$nombre])) {
+            return (int) $this->pdo->lastInsertId();
+        } else {
+            return -1;
         }
     }
 

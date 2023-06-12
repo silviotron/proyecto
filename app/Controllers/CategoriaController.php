@@ -14,6 +14,8 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         );
         $model = new \Com\Daw2\Models\CategoriaModel();
         $data['categorias'] = $model->getAll();
+        unset($data['categorias'][0]);
+
         $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'categorias.view.php', 'templates/footer.view.php'), $data);
     }
 
@@ -99,7 +101,7 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
         $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
         if (count($errores) == 0) {
             $modelo = new \Com\Daw2\Models\CategoriaModel();
-            if ($modelo->edit($id,$saneado['nombre'])) {
+            if ($modelo->edit($id, $saneado['nombre'])) {
 
                 header('location: /categorias');
             } else {
@@ -135,7 +137,7 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
             $errores['nombre'] = 'Debe insertar un nombre a la categoria.';
         } else if (strlen($post['nombre']) > 100) {
             $errores['nombre'] = 'El nombre debe tener una longitud máxima de 100 caracteres.';
-        } else if ((isset($post['id']) && $modelo->existsNombreEdit($post['id'], $post['nombre']))||(!isset($post['id']) && $modelo->existsNombre($post['nombre']))) {
+        } else if ((isset($post['id']) && $modelo->existsNombreEdit($post['id'], $post['nombre'])) || (!isset($post['id']) && $modelo->existsNombre($post['nombre']))) {
             $errores['nombre'] = 'La categoria ya Existe';
         }
 

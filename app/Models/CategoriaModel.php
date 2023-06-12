@@ -7,7 +7,7 @@ namespace Com\Daw2\Models;
 class CategoriaModel extends \Com\Daw2\Core\BaseModel {
 
     function getAll(): array {
-        $stmt = $this->pdo->query('SELECT * FROM aux_categoria WHERE id_categoria!=0');
+        $stmt = $this->pdo->query('SELECT * FROM aux_categoria');
         return $stmt->fetchAll();
     }
 
@@ -22,14 +22,16 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
         $stmt->execute([$id]);
         return !empty($stmt->fetchAll());
     }
+
     function existsNombre(string $nombre): bool {
         $stmt = $this->pdo->prepare('SELECT id_categoria FROM aux_categoria WHERE nombre_categoria=?');
         $stmt->execute([$nombre]);
         return !empty($stmt->fetchAll());
     }
-    function existsNombreEdit(string $id,string $nombre): bool {
+
+    function existsNombreEdit(string $id, string $nombre): bool {
         $stmt = $this->pdo->prepare('SELECT id_categoria FROM aux_categoria WHERE nombre_categoria=? AND id_categoria!=?');
-        $stmt->execute([$nombre,$id]);
+        $stmt->execute([$nombre, $id]);
         return !empty($stmt->fetchAll());
     }
 
@@ -46,6 +48,8 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
 
     function delete(string $id): int {
         try { #if there are products enroled to the provider returns 0
+            $stmt = $this->pdo->prepare('UPDATE producto SET id_categoria=0 WHERE id_categoria=?');
+            $stmt->execute([$id]);
             $stmt = $this->pdo->prepare('SELECT * FROM producto WHERE id_categoria=?');
             $stmt->execute([$id]);
             if ($stmt->rowCount() > 0) {

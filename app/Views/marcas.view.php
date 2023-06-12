@@ -5,7 +5,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active">Categorias</li>
+                <li class="breadcrumb-item active">Marcas</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -14,13 +14,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
-                    <?php if (strpos($_SESSION['permisos']['categorias'], 'w') !== false) { ?>  
+                    <?php if (strpos($_SESSION['permisos']['marcas'], 'w') !== false) { ?>  
                         <div class="m-0 font-weight-bold justify-content-end">
-                            <a href="/categorias/add/" class="btn btn-primary ml-1 float-right" style="margin: 10px"> Nueva categoria <i class="bi bi-plus"></i></a>
+                            <a href="/marcas/add/" class="btn btn-primary ml-1 float-right" style="margin: 10px"> Nueva marca <i class="bi bi-plus"></i></a>
                         </div>
                     <?php } ?>
                     <div class="card-body">
-                        <h5 class="card-title">Categorias</h5>
+                        <h5 class="card-title">Marcas</h5>
                         <table id="tabladatos" class="table table-striped">                    
                             <thead>
                                 <tr>   
@@ -30,15 +30,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($categorias as $categoria) { ?>                        
+                                <?php foreach ($marcas as $marca) { ?>                        
                                     <tr >
-                                        <th scope="row"><?php echo $categoria['id_categoria'] ?></th>
-                                        <td><?php echo $categoria['nombre_categoria'] ?></td>
+                                        <th scope="row"><?php echo $marca['id_marca'] ?></th>
+                                        <td><?php echo $marca['nombre_marca'] ?></td>
                                         <td>   
-                                            <?php if (strpos($_SESSION['permisos']['categorias'], 'w') !== false) { ?>                                     
-                                                <a href="/categorias/edit/<?php echo $categoria['id_categoria'] ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
-                                            <?php } if (strpos($_SESSION['permisos']['categorias'], 'd') !== false) { ?>
-                                                <a href="/categorias/delete/<?php echo $categoria['id_categoria'] ?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
+                                            <?php if (strpos($_SESSION['permisos']['marcas'], 'w') !== false) { ?>                                     
+                                                <a href="/marcas/edit/<?php echo $marca['id_marca'] ?>" class="btn btn-success"><i class="bi bi-pencil-square"></i></a>
+                                            <?php } if (strpos($_SESSION['permisos']['marcas'], 'd') !== false) { ?>
+                                                <a href="/marcas/delete/<?php echo $marca['id_marca'] ?>" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></a>
                                                 <?php } ?>
                                         </td>
                                     </tr>
@@ -46,7 +46,7 @@
 
                             </tbody>  
                             <caption>
-                                Total de registros: <?php echo count($categorias); ?>
+                                Total de registros: <?php echo count($marcas); ?>
                             </caption>
                         </table>
 

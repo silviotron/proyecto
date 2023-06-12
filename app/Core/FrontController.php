@@ -266,6 +266,67 @@ class FrontController {
                         }
                         , 'get');
             }
+
+            # Gestion de marcas
+            if (strpos($_SESSION['permisos']['marcas'], 'r') !== false) {
+                Route::add('/marcas',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->mostrarTodos();
+                        }
+                        , 'get');
+
+                Route::add('/marcas/view/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->view($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['marcas'], 'd') !== false) {
+                Route::add('/marcas/delete/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->delete($id);
+                        }
+                        , 'get');
+            }
+            if (strpos($_SESSION['permisos']['marcas'], 'w') !== false) {
+                Route::add('/marcas/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->mostrarEdit($id);
+                        }
+                        , 'get');
+
+                Route::add('/marcas/edit/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->edit($id);
+                        }
+                        , 'post');
+
+                Route::add('/marcas/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->mostrarAdd();
+                        }
+                        , 'get');
+
+                Route::add('/marcas/add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->add();
+                        }
+                        , 'post');
+
+                Route::add('/marcas/cant_add',
+                        function () {
+                            $controlador = new \Com\Daw2\Controllers\MarcaController();
+                            $controlador->cant_add();
+                        }
+                        , 'get');
+            }
             Route::add('/session/borrar',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\SessionController();
