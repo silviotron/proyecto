@@ -60,7 +60,7 @@ class FrontController {
                         $controlador = new \Com\Daw2\Controllers\CarritoController();
                         $controlador->add($id);
                     }
-                    , 'get');
+                    , 'post');
 
             Route::pathNotFound(
                     function () {
@@ -327,6 +327,7 @@ class FrontController {
                         }
                         , 'get');
             }
+            
             Route::add('/session/borrar',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\SessionController();
