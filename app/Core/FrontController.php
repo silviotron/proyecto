@@ -215,53 +215,53 @@ class FrontController {
                         }
                         , 'get');
 
-                Route::add('/productos/view/([A-Za-z0-9]+)',
+                Route::add('/categorias/view/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->view($id);
                         }
                         , 'get');
             }
             if (strpos($_SESSION['permisos']['categorias'], 'd') !== false) {
-                Route::add('/productos/delete/([A-Za-z0-9]+)',
+                Route::add('/categorias/delete/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->delete($id);
                         }
                         , 'get');
             }
             if (strpos($_SESSION['permisos']['categorias'], 'w') !== false) {
-                Route::add('/productos/edit/([A-Za-z0-9]+)',
+                Route::add('/categorias/edit/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->mostrarEdit($id);
                         }
                         , 'get');
 
-                Route::add('/productos/edit/([A-Za-z0-9]+)',
+                Route::add('/categorias/edit/([A-Za-z0-9]+)',
                         function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->edit($id);
                         }
                         , 'post');
 
-                Route::add('/productos/add',
+                Route::add('/categorias/add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->mostrarAdd();
                         }
                         , 'get');
 
-                Route::add('/productos/add',
+                Route::add('/categorias/add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->add();
                         }
                         , 'post');
 
-                Route::add('/productos/cant_add',
+                Route::add('/categorias/cant_add',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
+                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->cant_add();
                         }
                         , 'get');

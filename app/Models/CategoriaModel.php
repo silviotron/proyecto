@@ -7,19 +7,29 @@ namespace Com\Daw2\Models;
 class CategoriaModel extends \Com\Daw2\Core\BaseModel {
 
     function getAll(): array {
-        $stmt = $this->pdo->query('SELECT * FROM aux_categoria');
+        $stmt = $this->pdo->query('SELECT * FROM aux_categoria WHERE id_categoria!=0');
         return $stmt->fetchAll();
     }
 
     function get(string $id): array {
         $stmt = $this->pdo->prepare('SELECT * FROM aux_categoria WHERE id_categoria=?');
         $stmt->execute([$id]);
-        return $stmt->fetchAll();
+        return $stmt->fetchAll()[0];
     }
 
     function exists(string $id): bool {
         $stmt = $this->pdo->prepare('SELECT id_categoria FROM aux_categoria WHERE id_categoria=?');
         $stmt->execute([$id]);
+        return !empty($stmt->fetchAll());
+    }
+    function existsNombre(string $nombre): bool {
+        $stmt = $this->pdo->prepare('SELECT id_categoria FROM aux_categoria WHERE nombre_categoria=?');
+        $stmt->execute([$nombre]);
+        return !empty($stmt->fetchAll());
+    }
+    function existsNombreEdit(string $id,string $nombre): bool {
+        $stmt = $this->pdo->prepare('SELECT id_categoria FROM aux_categoria WHERE nombre_categoria=? AND id_categoria!=?');
+        $stmt->execute([$nombre,$id]);
         return !empty($stmt->fetchAll());
     }
 
@@ -69,6 +79,16 @@ class CategoriaModel extends \Com\Daw2\Core\BaseModel {
         } catch (PDOException $ex) {
             echo "cant update for some reason: " . $ex->getMossage();
             return false;
+        }
+    }
+
+    public function insert(string $nombre): int {
+        $sql = 'INSERT INTO aux_categoria(nombre_categoria) values (?)';
+        $stmt = $this->pdo->prepare($sql);
+        if ($stmt->execute([$nombre])) {
+            return (int) $this->pdo->lastInsertId();
+        } else {
+            return -1;
         }
     }
 
