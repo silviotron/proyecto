@@ -41,15 +41,19 @@
             </div>
             <div class="col-12 col-lg-4">
                 <div class="cart-summary">
+                    <form action="/carrito/comprar" method="post">
                     <h5>Coste</h5>
                     <ul class="summary-table">
                         <li><span>Subtotal:</span> <span><?php echo $subTotal . ' €'; ?></span></li>
                         <li><span>Envio:</span> <span><?php echo $envio; ?></span></li>
                         <li><span>Total:</span> <span><?php echo $total . ' €'; ?></span></li>
+                        <li style="margin-bottom: 0px"><label for="direccion"><span>Direccion: </span></label> </li>
+                        <textarea style="resize: none; width: 100%; height: 100px"  type="text" id="direccion" name="direccion"> </textarea>
                     </ul>
-                    <div class="cart-btn mt-100">
-                        <a href="/comprar" class="btn amado-btn w-100">Comprar</a>
+                    <div class="cart-btn mt-50">
+                        <button type="submit" value="Comprar" name="comprar" class="btn amado-btn w-100">Comprar</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>

@@ -85,6 +85,12 @@ class FrontController {
                         $controlador->restar($id);
                     }
                     , 'get');
+            Route::add('/carrito/comprar',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->comprar();
+                    }
+                    , 'post');
 
             Route::pathNotFound(
                     function () {

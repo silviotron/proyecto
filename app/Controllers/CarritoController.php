@@ -30,7 +30,7 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
             $_SESSION['carrito'] = [];
             $data['subTotal'] = 0;
             $data['total'] = 0;
-            $data['envio'] = 'Vacio';
+            $data['envio'] = 'Vacío';
         }
 
         $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/cart.view.php', 'tienda/templates/footer.view.php'), $data);
@@ -51,7 +51,7 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
                 $_SESSION['carrito'][$id]['cantidad'] = 0;
             }
         }
-        
+
         if (isset($_SESSION['carrito'][$id])) {
             if (isset($_POST['cantidad']) && is_numeric($_POST['cantidad'])) {
                 $_SESSION['carrito'][$id]['cantidad'] += $_POST['cantidad'];
@@ -100,7 +100,15 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
     }
 
     function comprar() {
-        //TODO: realizar pedido con los datos de $_SESSION
+        if (isset($_SESSION['usuario'])) {
+            $model = new \Com\Daw2\Models\PedidoModel();
+            $model->comprar($_SESSION['carrito'], $_SESSION['usuario']['id_usuario'], $_POST['direccion']);
+            $_SESSION['carrito'] = [];
+            header("location: \ ");
+        } else {
+            header("location: \login ");
+
+        }
     }
 
 }
