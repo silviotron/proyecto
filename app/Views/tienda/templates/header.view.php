@@ -11,7 +11,7 @@
 
     <title>Calceta - <?php echo $titulo?></title>
 
-    <link rel="icon" href="img/core-img/favicon.ico">
+    <link href="assets/img/favicon.png" rel="icon">
 
     <link rel="stylesheet" href="css/core-style.css">
     <link rel="stylesheet" href="style.css">
@@ -43,7 +43,7 @@
         <div class="mobile-nav">
 
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="img/core-img/logo.png" alt="logo"></a>
+                <a href="/"><img src="assets/img/logo.png" alt="logo"></a>
             </div>
 
             <div class="amado-navbar-toggler">
@@ -58,7 +58,7 @@
             </div>
 
             <div class="logo">
-                <a href="index.html"><img src="img/core-img/logo.png" alt="logo"></a>
+                 <a href="/"><img src="assets/img/logo.png" alt="logo"></a>
             </div>
 
             <nav class="amado-nav">
