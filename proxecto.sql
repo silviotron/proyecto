@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 06-06-2023 a las 00:29:52
+-- Tiempo de generación: 13-06-2023 a las 22:56:40
 -- Versión del servidor: 10.6.7-MariaDB-2ubuntu1.1
 -- Versión de PHP: 8.1.9
 
@@ -171,6 +171,8 @@ CREATE TABLE `historial_pedido` (
 CREATE TABLE `historial_ventas` (
   `id` int(20) NOT NULL,
   `id_producto` int(11) NOT NULL,
+  `precio` decimal(10,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
   `id_pedido` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -199,7 +201,7 @@ CREATE TABLE `producto` (
 INSERT INTO `producto` (`id`, `nombre`, `descripcion`, `precio`, `descuento`, `stock`, `id_marca`, `id_categoria`, `id_tipo_precio`) VALUES
 (1, 'HOOOKED RIBBON XL', 'Hoooked Ribbon XL es un trapillo muy ligero de gran calidad, compuesto por fibras recicladas de algodón. Es perfecto para trabajar bonitas labores a la vez que cuidas el medio ambiente. Realiza proyectos como accesorios para decorar el hogar y más.', '9.95', 0, 0, 2, 2, 1),
 (2, 'KATIA MENFIS COLOR\r\n', 'Menfis Color es un hilo multicolor, muy suave y cómodo, perfecto para tejer prendas de la temporada primavera/verano. Su diseño jaspeado le dará un toque especial a todas tus prendas. Está compuesto por fibras 100% algodón y es ideal para tejer jerséis finos, vestidos de tirantes, rebecas coloridas, tops de ganchillo, etc.', '7.10', 0, 33, 1, 2, 1),
-(3, 'TELA DE ALGODÓN MEZFABRICS - BLOSSOM NIGHT', 'La tela MezFabrics - Blossom Night ha sido diseñada por Dee Hardwicke. Se compone de 100% algodón, por lo que es de tipo hipoalergénica. Realiza prendas y accesorios para toda la familia, incluidos los más pequeños. ¡Da rienda suelta a tu imaginación!', '16.95', 0, 22, NULL, 1, 2),
+(3, 'TELA DE ALGODÓN MEZFABRICS - BLOSSOM NIGHT', 'La tela MezFabrics - Blossom Night ha sido diseñada por Dee Hardwicke. Se compone de 100% algodón, por lo que es de tipo hipoalergénica. Realiza prendas y accesorios para toda la familia, incluidos los más pequeños. ¡Da rienda suelta a tu imaginación!', '16.95', 0, 22, 0, 1, 2),
 (9, 'KATIA CANADA', 'Katia Canada es una lana gruesa perfecta para tejer con agujas de 7 - 8 mm, de la gama de las lanas básicas de Katia que te ofrece una multitud de colores entre los que elegir.', '3.30', 0, 44, 1, 2, 1),
 (10, 'GANCHILLOS DE COLORES KATIA 12 mm', 'Ganchillos de colores Katia, son unas agujas de ganchillo en aluminio con mango siliconado, fabricadas por KnitPro para lanas Katia. Desde 7 mm hasta 12 mm.', '5.70', 0, 333, 1, 6, 1),
 (11, 'KIT DE GANCHILLO AMIGURUMI PINGÜINO COCO - HOOOKED', 'El kit de ganchillo Pingüino Coco de Hoooked contiene todo lo que necesitas para tejer a ganchillo un adorable amigurumi con forma de pingüino. Dentro de la cajita encontrarás el hilo, el ganchillo y las instrucciones en varios idiomas. ¡Te resultará muy fácil de realizar!&#13;&#10;&#13;&#10;Instrucciones disponibles en español y otros idiomas.', '9.99', 0, 12, 2, 6, 1);
@@ -232,7 +234,6 @@ CREATE TABLE `usuario` (
   `ultima_sesion` datetime NOT NULL DEFAULT current_timestamp(),
   `id_estado` int(11) DEFAULT NULL,
   `creacion` datetime DEFAULT NULL,
-  `nacionalidad` varchar(2) DEFAULT NULL,
   `telefono` varchar(50) DEFAULT NULL,
   `direccion` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 ROW_FORMAT=COMPACT;
@@ -241,13 +242,13 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `apellido`, `ultima_sesion`, `id_estado`, `creacion`, `nacionalidad`, `telefono`, `direccion`) VALUES
-(1, 1, 'admin@calceta.es', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'administrador', '', '2023-06-05 18:44:18', 1, '2023-05-13 12:58:04', 'es', NULL, NULL),
-(2, 2, 'productos@calceta.es', '$2y$10$HJXZ3E6yUoOCEDMafNad7OF.ZSyxFN20475sJqd51lL6/6oEHnOY6', 'productos', '', '2023-02-27 12:26:02', 1, '2023-02-27 12:26:02', 'es', NULL, NULL),
-(3, 3, 'auditor@calceta.es', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'auditor', '', '2023-05-23 19:44:20', 1, '2023-02-27 12:26:34', 'es', NULL, NULL),
-(4, 5, 'silvionovasmartinez@gmail.com', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Silvio', 'Novas Martínez', '2023-05-25 00:44:44', 1, '2023-03-01 12:26:34', 'es', NULL, NULL),
-(5, 3, 'soporte@calceta.es', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'soporte', '', '2023-02-27 12:26:34', 1, '2023-02-27 12:26:34', 'es', NULL, NULL),
-(6, 5, 'baneado@calceta.es', '$2y$10$TJT6xNw969TJofF1cRkoju9OyCWaUmD2nlwFAAWSMfC1Cn3p4jqwK', 'baneado', 'baneado', '2023-05-19 18:09:10', 2, '2023-05-19 18:09:10', 'es', NULL, NULL);
+INSERT INTO `usuario` (`id_usuario`, `id_rol`, `email`, `pass`, `nombre`, `apellido`, `ultima_sesion`, `id_estado`, `creacion`, `telefono`, `direccion`) VALUES
+(1, 1, 'admin@calceta.es', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'administrador', '', '2023-06-13 14:10:01', 1, '2023-05-13 12:58:04', '', ''),
+(2, 2, 'productos@calceta.es', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'productos', '', '2023-02-27 12:26:02', 1, '2023-02-27 12:26:02', NULL, NULL),
+(3, 3, 'auditor@calceta.es', '$2y$10$nsYSRkz9E4AHpsg5Ixk5f.vkbG1OOSmsawUoF.aZXXbIMz0HVgCr6', 'auditor', '', '2023-06-10 19:12:16', 1, '2023-02-27 12:26:34', '', ''),
+(4, 5, 'silvionovasmartinez@gmail.com', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'Silvio', 'Novas Martínez', '2023-06-13 12:56:05', 1, '2023-03-01 12:26:34', NULL, NULL),
+(5, 1, 'soporte@calceta.es', '$2y$10$UhguCd5lROW4Pyj07NQ3OOCCLhAssvJMCaOX/Oec.YXvOjT27ueEO', 'soporte', '', '2023-02-27 12:26:34', 1, '2023-02-27 12:26:34', '', ''),
+(6, 1, 'baneado@calceta.es', '$2y$10$BVDiPnL0C72xiYnv2b7PeOi/zWfCJ2KYZLsrGGawLQ1aYyUOJ/EmC', 'baneado', 'baneado', '2023-05-19 18:09:10', 2, '2023-05-19 18:09:10', '', '');
 
 -- --------------------------------------------------------
 
@@ -359,7 +360,7 @@ ALTER TABLE `valoracion_producto`
 -- AUTO_INCREMENT de la tabla `aux_categoria`
 --
 ALTER TABLE `aux_categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `aux_estado_pedido`
@@ -377,7 +378,7 @@ ALTER TABLE `aux_estado_usuario`
 -- AUTO_INCREMENT de la tabla `aux_marca`
 --
 ALTER TABLE `aux_marca`
-  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_marca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `aux_precio`
@@ -407,7 +408,7 @@ ALTER TABLE `historial_ventas`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `soporte`
@@ -419,7 +420,7 @@ ALTER TABLE `soporte`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `valoracion_producto`

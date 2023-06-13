@@ -61,6 +61,30 @@ class FrontController {
                         $controlador->add($id);
                     }
                     , 'post');
+            Route::add('/carrito/add/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->add($id);
+                    }
+                    , 'get');
+            Route::add('/carrito/remove/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->remove($id);
+                    }
+                    , 'get');
+            Route::add('/carrito/sumar/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->sumar($id);
+                    }
+                    , 'get');
+            Route::add('/carrito/restar/([A-Za-z0-9]+)',
+                    function ($id) {
+                        $controlador = new \Com\Daw2\Controllers\CarritoController();
+                        $controlador->restar($id);
+                    }
+                    , 'get');
 
             Route::pathNotFound(
                     function () {
