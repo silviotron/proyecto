@@ -14,11 +14,18 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
         );
         //TODO: guardar en data los productos del carrito guardado en session
         $model = new \Com\Daw2\Models\ProductoModel();
-        $total = 0;
+        $subTotal = 0;
         foreach ($_SESSION['carrito'] as $value) {
-            $total += $value['producto']['precio']*$value['cantidad'];
+            $subTotal += $value['producto']['precio']*$value['cantidad'];
         }
-        $data['total'] = $total;
+        $data['subTotal'] = $subTotal;
+        $data['total'] = $subTotal;
+        $data['envio'] = 'Gratis';
+        if ($subTotal < 50) {
+            $data['total'] += 10;
+            $data['envio'] = '10 €';
+
+        }
         $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/cart.view.php', 'tienda/templates/footer.view.php'), $data);
         //$this->view->show('tienda.view.php', $data);
     }
@@ -43,6 +50,10 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
         }
         header("location: \carrito");
         //$this->view->show('tienda.view.php', $data);
+    }
+    
+    function comprar() {
+        //TODO: realizar pedido con los datos de $_SESSION
     }
 
 }

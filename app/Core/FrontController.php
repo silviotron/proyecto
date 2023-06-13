@@ -67,6 +67,12 @@ class FrontController {
                         header('location: /');
                     }
             );
+            Route::add('/session/borrar',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\SessionController();
+                        $controlador->destroySession();
+                    }
+                    , 'get');
             #panel control    
         } else if ($_SESSION['usuario']['id_rol'] != 5) {
             //Rutas que están disponibles para todos
@@ -327,7 +333,7 @@ class FrontController {
                         }
                         , 'get');
             }
-            
+
             Route::add('/session/borrar',
                     function () {
                         $controlador = new \Com\Daw2\Controllers\SessionController();

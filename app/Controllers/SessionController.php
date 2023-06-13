@@ -8,7 +8,7 @@ class SessionController extends \Com\Daw2\Core\BaseController {
 
     function destroySession() {
         session_destroy();
-        header("location: \ ");
+        header("location: \tienda ");
     }
 
 }
