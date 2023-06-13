@@ -292,5 +292,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
 
         return $errores;
     }
+    
+
 
 }

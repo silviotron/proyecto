@@ -56,7 +56,7 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         unset($data['enviar']);
         unset($data['imagen']);
         $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
-        
+
         if ($stmt->execute($data)) {
             return (int) $this->pdo->lastInsertId();
         } else {
@@ -66,17 +66,17 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
 
     public function update(array $data): bool {
         if ($data['pass'] == '') {
-            $tempo = ''; 
+            $tempo = '';
             unset($data['pass']);
-        }else{
-            $tempo = ', pass=:pass'; 
+        } else {
+            $tempo = ', pass=:pass';
             $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
         }
         var_dump($data);
         $sql = "UPDATE usuario SET email=:email $tempo, id_rol=:rol, nombre=:nombre, apellido=:apellido, telefono=:telefono, id_estado=:estado, direccion=:direccion WHERE id_usuario=:id";
         $stmt = $this->pdo->prepare($sql);
         unset($data['enviar']);
-        unset($data['imagen']);        
+        unset($data['imagen']);
         var_dump($data);
         if ($stmt->execute($data)) {
             return $stmt->rowCount() <= 1;
@@ -221,23 +221,9 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
-    function count(array $filtros): int {
-        $procesado = $this->filter($filtros);
-
-        $condiciones = $procesado['condiciones'];
-        $parametros = $procesado['parametros'];
-
-        if (count($parametros) > 0) {
-            $sql = self::COUNT_FROM . ' WHERE ' . implode(" AND ", $condiciones);
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($parametros);
-            $res = $stmt->fetchAll();
-            return $res[0]['total'];
-        } else {
-            $stmt = $this->pdo->query(self::COUNT_FROM);
-            $res = $stmt->fetchAll();
-            return $res[0]['total'];
-        }
+    function count() {
+        $stmt = $this->pdo->query("SELECT COUNT(id_usuario) as count FROM usuario WHERE id_rol=5");
+        return $stmt->fetchAll()[0]['count'];
     }
 
     /*
