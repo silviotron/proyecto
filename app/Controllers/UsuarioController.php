@@ -30,6 +30,45 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         }
     }
 
+    function register() {
+        $this->view->show('register.view.php');
+    }
+
+    function registerProceso() {
+        $_POST['imagen'] = $_FILES['imagen'];
+        $errores = $this->checkFormRegister($_POST);
+        if (count($errores) == 0) {
+            $modelo = new \Com\Daw2\Models\UsuarioModel();
+            $saneado = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $saneado['rol'] = 5;
+            $saneado['estado'] = 1;
+            $id = $modelo->insert($saneado);
+            if ($id != -1) {
+                $target_dir = "assets/images/user/";
+                $target_file = $target_dir . basename($id . '.jpg');
+                if ($_FILES['imagen']['error'] == 4) {
+                    copy($target_dir . "default.jpg", $target_file);
+                } else if ($_FILES['imagen']['error'] == 0) {
+                    move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file);
+                }
+                $model = new \Com\Daw2\Models\UsuarioModel();
+                $userData = $model->login($_POST['email'], $_POST['pass']);
+                $model->userDateUpdate($userData['id_usuario']);
+                $_SESSION['usuario'] = $userData;
+                $_SESSION['permisos'] = $this->getPermisos($userData['id_rol']);
+                header('location: /');
+
+            }
+        } else {
+            
+            $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['errores'] = $errores;
+            unset($data['input']['imagen']);
+
+            $this->view->showViews(array('register.view.php'), $data);
+        }
+    }
+
     function getPermisos($idRol) {
         $permisos = array(
             'usuarios' => '',
@@ -228,6 +267,62 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
         }
     }
 
+    private function checkFormRegister(array $post) {
+        $errores = [];
+        $userModel = new \Com\Daw2\Models\UsuarioModel();
+        if (empty($post['email'])) {
+            $errores['email'] = "Campo obligatorio.";
+        } else if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
+            $errores['email'] = 'Inserte un email válido.';
+        } else if ($userModel->existsEmail($post['email'])) {
+            $errores['email'] = 'El email seleccionado ya está en uso.';
+        }
+
+        if ($post['pass'] == '') {
+            $errores['pass'] = 'Introduce una contraseña.';
+        } else if (preg_match('/\s+/', $post['pass'])) {
+            $errores['pass'] = 'La contraseña no puede contener espacios.';
+        } else if (strlen($post['pass']) < 5) {
+            $errores['pass'] = "La contraseña debe contener al menos 5 caracteres.";
+        } else if (strlen($post['pass']) > 100) {
+            $errores['pass'] = 'La contraseña no puede tener mas de 100 caracteres.';
+        } else if ($post['pass'] != $post['pass2']) {
+            $errores['pass'] = 'Las contraseñas no son iguales.';
+        }
+
+        if ($post['nombre'] == '') {
+            $errores['nombre'] = 'El nombre es obligatorio.';
+        } else if (strlen($post['nombre']) > 100) {
+            $errores['nombre'] = 'El nombre debe tener una longitud máxima de 100 caracteres.';
+        }
+        if (strlen($post['apellido']) > 100) {
+            $errores['apellido'] = 'El apellido debe tener una longitud máxima de 100 caracteres.';
+        }
+
+        if ($post['telefono'] != '' && !preg_match('/^[0-9]{9}$/', str_replace(' ', '', $post['telefono']))) {
+            $errores['telefono'] = 'Introduce un telefono de 9 digitos.';
+        }
+
+        if (strlen($post['direccion']) > 500) {
+            $errores['direccion'] = 'La direccion no puede superar los 500 caracteres.';
+        }
+
+
+        if ($post["imagen"]["error"] == 0) {
+            $allowedExtensions = ['jpg', 'jpeg', 'png'];
+            $extension = strtolower(pathinfo($post["imagen"]["name"], PATHINFO_EXTENSION));
+            if (getimagesize($post["imagen"]["tmp_name"]) == false) {
+                $errores['imagen'] = "El archivo no es una imagen.";
+            } else if ($post["imagen"]["size"] > 5000000) {
+                $errores['imagen'] = "No se permiten imagenes de mas de 5 MB.";
+            } else if (!in_array($extension, $allowedExtensions)) {
+                $errores['imagen'] = "La extension $extension no esta permitida.";
+            }
+        }
+
+        return $errores;
+    }
+
     private function checkForm(array $post, bool $alta) {
         $errores = [];
         if (empty($post['email'])) {
@@ -240,17 +335,16 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
                 $errores['email'] = 'El email seleccionado ya está en uso.';
             }
         }
-        if ($alta || $post['pass'] != ''){
+        if ($alta || $post['pass'] != '') {
             if ($post['pass'] == '') {
                 $errores['pass'] = 'Introduce una contraseña.';
             } else if (preg_match('/\s+/', $post['pass'])) {
                 $errores['pass'] = 'La contraseña no puede contener espacios.';
-            }else if (strlen($post['pass']) < 5) {
+            } else if (strlen($post['pass']) < 5) {
                 $errores['pass'] = "La contraseña debe contener al menos 5 caracteres.";
-            }else if(strlen($post['pass']) > 100){
+            } else if (strlen($post['pass']) > 100) {
                 $errores['pass'] = 'La contraseña no puede tener mas de 100 caracteres.';
             }
-            
         }
         if ($post['nombre'] == '') {
             $errores['nombre'] = 'El nombre es obligatorio.';
@@ -261,7 +355,7 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             $errores['apellido'] = 'El apellido debe tener una longitud máxima de 100 caracteres.';
         }
 
-        if ($post['telefono'] != '' && preg_match('/^[0-9]{9}$/', str_replace(' ', '', $post['telefono']))) {
+        if ($post['telefono'] != '' && !preg_match('/^[0-9]{9}$/', str_replace(' ', '', $post['telefono']))) {
             $errores['telefono'] = 'Introduce un telefono de 9 digitos.';
         }
 
@@ -292,7 +386,5 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
 
         return $errores;
     }
-    
-
 
 }

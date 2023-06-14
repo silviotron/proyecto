@@ -51,10 +51,12 @@ class UsuarioModel extends \Com\Daw2\Core\BaseModel {
     }
 
     public function insert(array $data): int {
+        var_dump($data);
         $sql = "INSERT INTO usuario (email, pass, id_rol, nombre, apellido, telefono , id_estado, direccion ) VALUES(:email, :pass, :rol, :nombre, :apellido, :telefono, :estado, :direccion)";
         $stmt = $this->pdo->prepare($sql);
         unset($data['enviar']);
         unset($data['imagen']);
+        unset($data['pass2']);
         $data['pass'] = password_hash($data['pass'], PASSWORD_DEFAULT);
 
         if ($stmt->execute($data)) {
