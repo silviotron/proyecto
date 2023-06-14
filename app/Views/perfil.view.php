@@ -1,11 +1,11 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Profile</h1>
+        <h1>Perfil</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Profile</li>
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active">Perfil</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -43,20 +43,20 @@
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                             </li>
 
-                            
+
 
                         </ul>
                         <div class="tab-content pt-2">
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                
-                                <h5 class="card-title">Profile Details</h5>
+
+                                <h5 class="card-title">Detalles del Perfil</h5>
 
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label ">Nombre</div>
                                     <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['nombre'] ?></div>
                                 </div>
-                                <?php if ($_SESSION['usuario']['apellido']!=null) { ?>
+                                <?php if ($_SESSION['usuario']['apellido'] != null) { ?>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Apellido</div>
                                         <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['apellido'] ?></div>
@@ -66,12 +66,12 @@
                                     <div class="col-lg-3 col-md-4 label"> Email</div>
                                     <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['email'] ?></div>
                                 </div>                               
-                                
+
                                 <div class="row">
                                     <div class="col-lg-3 col-md-4 label"> Creacion</div>
-                                    <div class="col-lg-9 col-md-8"><?php echo substr($_SESSION['usuario']['creacion'], 0,10) ?></div>
+                                    <div class="col-lg-9 col-md-8"><?php echo substr($_SESSION['usuario']['creacion'], 0, 10) ?></div>
                                 </div>  
-                                <?php if ($_SESSION['usuario']['id_rol']!=null) { ?>
+                                <?php if ($_SESSION['usuario']['id_rol'] != null) { ?>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Rol</div>
                                         <div class="col-lg-9 col-md-8"><?php echo $_SESSION['usuario']['nombre_rol'] ?></div>

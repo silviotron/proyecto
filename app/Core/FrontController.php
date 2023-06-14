@@ -146,13 +146,6 @@ class FrontController {
                             $controlador->mostrarTodos();
                         }
                         , 'get');
-
-                Route::add('/usuarios/view/([A-Za-z0-9]+)',
-                        function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                            $controlador->view($id);
-                        }
-                        , 'get');
             }
             if (strpos($_SESSION['permisos']['usuarios'], 'd') !== false) {
                 Route::add('/usuarios/delete/([A-Za-z0-9]+)',
@@ -190,7 +183,6 @@ class FrontController {
                             $controlador->add();
                         }
                         , 'post');
-
             }
 
             # Gestion de productos
@@ -199,13 +191,6 @@ class FrontController {
                         function () {
                             $controlador = new \Com\Daw2\Controllers\ProductoController();
                             $controlador->mostrarTodos();
-                        }
-                        , 'get');
-
-                Route::add('/productos/view/([A-Za-z0-9]+)',
-                        function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\ProductoController();
-                            $controlador->view($id);
                         }
                         , 'get');
             }
@@ -245,7 +230,6 @@ class FrontController {
                             $controlador->add();
                         }
                         , 'post');
-
             }
 
             # Gestion de categorias
@@ -254,13 +238,6 @@ class FrontController {
                         function () {
                             $controlador = new \Com\Daw2\Controllers\CategoriaController();
                             $controlador->mostrarTodos();
-                        }
-                        , 'get');
-
-                Route::add('/categorias/view/([A-Za-z0-9]+)',
-                        function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                            $controlador->view($id);
                         }
                         , 'get');
             }
@@ -300,7 +277,6 @@ class FrontController {
                             $controlador->add();
                         }
                         , 'post');
-
             }
 
             # Gestion de marcas
@@ -309,13 +285,6 @@ class FrontController {
                         function () {
                             $controlador = new \Com\Daw2\Controllers\MarcaController();
                             $controlador->mostrarTodos();
-                        }
-                        , 'get');
-
-                Route::add('/marcas/view/([A-Za-z0-9]+)',
-                        function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\MarcaController();
-                            $controlador->view($id);
                         }
                         , 'get');
             }
@@ -355,7 +324,6 @@ class FrontController {
                             $controlador->add();
                         }
                         , 'post');
-
             }
             # Gestion de pedidos
             if (strpos($_SESSION['permisos']['pedidos'], 'r') !== false) {
@@ -363,13 +331,6 @@ class FrontController {
                         function () {
                             $controlador = new \Com\Daw2\Controllers\PedidoController();
                             $controlador->mostrarTodos();
-                        }
-                        , 'get');
-
-                Route::add('/pedidos/view/([A-Za-z0-9]+)',
-                        function ($id) {
-                            $controlador = new \Com\Daw2\Controllers\PedidoController();
-                            $controlador->view($id);
                         }
                         , 'get');
             }

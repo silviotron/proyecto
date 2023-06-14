@@ -15,7 +15,7 @@
 
         <link rel="stylesheet" href="css/core-style.css">
         <link rel="stylesheet" href="style.css">
-        
+
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     </head>
 
@@ -73,18 +73,19 @@
                 <div class="amado-btn-group mt-30 mb-50">
                     <a href="<?php echo isset($_SESSION['usuario']) ? '/session/borrar' : '/login' ?>" class="btn amado-btn mb-15"><?php echo isset($_SESSION['usuario']) ? 'Logout' : 'Login' ?></a>
                 </div>
-                
+
 
                 <div class="cart-fav-search mb-50">
                     <a href="/carrito" class="cart-nav"><i class="bi bi-cart"></i> Cart <span>(<?php echo isset($_SESSION['carrito']) ? count($_SESSION['carrito']) : '0' ?>)</span></a>
                     <a href="#" class="search-nav"><i class="bi bi-search"></i> Search</a>
                 </div>
-<?php if (isset($_SESSION['usuario'])) { ?>
-                <div style=" margin-bottom: 50px">
-                    <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.jpg" alt="Profile" class="rounded-circle" style="border-radius: 1000px; height: 50px">
-                    <span><?php echo $_SESSION['usuario']['nombre'] ?></span>
-                </div>
-<?php } ?>
+                <?php if (isset($_SESSION['usuario'])) { ?>
+                    <div style=" margin-bottom: 50px">
+                        <img src="assets/images/user/<?php echo $_SESSION['usuario']['id_usuario'] ?>.jpg" alt="Profile" class="rounded-circle" style="border-radius: 50%; height: 50px; width: 50px;object-fit: cover;">
+                        <span style="margin-left: 5px"> <?php echo $_SESSION['usuario']['nombre'] ?></span>
+                        <span style="margin-top: 3px; font-size: 10px"><?php echo $_SESSION['usuario']['email'] ?></span>
+                    </div>
+                <?php } ?>
                 <div class="social-info d-flex justify-content-between" >
                     <a href="https://goo.gl/maps/SW1pJExJcGcTDVrU8" target="_blank"><i class="bi bi-geo-alt"  aria-hidden="true"></i></a>
                     <a href="https://www.instagram.com/planetacalceta/" target="_blank"><i class="bi bi-instagram"  aria-hidden="true"></i></a>

@@ -57,10 +57,9 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
                 $_SESSION['usuario'] = $userData;
                 $_SESSION['permisos'] = $this->getPermisos($userData['id_rol']);
                 header('location: /');
-
             }
         } else {
-            
+
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             $data['errores'] = $errores;
             unset($data['input']['imagen']);
@@ -88,6 +87,12 @@ class UsuarioController extends \Com\Daw2\Core\BaseController {
             $permisos['categorias'] = "r";
             $permisos['marcas'] = "r";
             $permisos['pedidos'] = "r";
+        } elseif (self::REPONEDOR == $idRol) {
+            $permisos['usuarios'] = "rw";
+            $permisos['productos'] = "rw";
+            $permisos['categorias'] = "rw";
+            $permisos['marcas'] = "rw";
+            $permisos['pedidos'] = "rw";
         }
         return $permisos;
     }

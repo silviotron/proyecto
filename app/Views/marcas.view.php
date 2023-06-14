@@ -1,7 +1,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Data Tables</h1>
+        <h1>Marcas</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -20,7 +20,6 @@
                         </div>
                     <?php } ?>
                     <div class="card-body">
-                        <h5 class="card-title">Marcas</h5>
                         <table id="tabladatos" class="table table-striped">                    
                             <thead>
                                 <tr>   
