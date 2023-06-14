@@ -10,6 +10,12 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
         $stmt = $this->pdo->query("SELECT producto.*, nombre_categoria, formato, nombre_marca FROM producto LEFT JOIN aux_categoria ON aux_categoria.id_categoria = producto.id_categoria LEFT JOIN aux_precio ON aux_precio.id = producto.id_tipo_precio  LEFT JOIN aux_marca ON aux_marca.id_marca = producto.id_marca");
         return $stmt->fetchAll();
     }
+    function getAllSearch($string) {
+        $s = "%$string%";
+        $stmt = $this->pdo->prepare("SELECT producto.*, nombre_categoria, formato, nombre_marca FROM producto LEFT JOIN aux_categoria ON aux_categoria.id_categoria = producto.id_categoria LEFT JOIN aux_precio ON aux_precio.id = producto.id_tipo_precio  LEFT JOIN aux_marca ON aux_marca.id_marca = producto.id_marca WHERE producto.nombre LIKE ? or producto.descripcion LIKE ? or nombre_marca LIKE ? or nombre_categoria LIKE ?");
+        $stmt->execute([$s,$s,$s,$s,]);
+        return $stmt->fetchAll();
+    }
 
     function getAllByCategoria($categoria) {
         $stmt = $this->pdo->prepare("SELECT producto.*, nombre_categoria, formato, nombre_marca FROM producto LEFT JOIN aux_categoria ON aux_categoria.id_categoria = producto.id_categoria LEFT JOIN aux_precio ON aux_precio.id = producto.id_tipo_precio  LEFT JOIN aux_marca ON aux_marca.id_marca = producto.id_marca WHERE producto.id_categoria=?");

@@ -48,6 +48,12 @@ class FrontController {
                         $controlador->shop();
                     }
                     , 'get');
+            Route::add('/tienda',
+                    function () {
+                        $controlador = new \Com\Daw2\Controllers\TiendaController();
+                        $controlador->shop();
+                    }
+                    , 'post');
             Route::add('/tienda/([A-Za-z0-9]+)',
                     function ($categoria) {
                         $controlador = new \Com\Daw2\Controllers\TiendaController();

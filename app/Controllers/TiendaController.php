@@ -33,11 +33,16 @@ class TiendaController extends \Com\Daw2\Core\BaseController {
             'breadcrumb' => ['Tienda'],
             'categoriaSeleccionada' => -1
         );
-        $model = new \Com\Daw2\Models\ProductoModel();
-        $data['productos'] = $model->getAll();
-
         $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
         $data['categorias'] = $categoriaModel->getAll();
+        
+        $model = new \Com\Daw2\Models\ProductoModel();
+        if (isset($_POST['search'])) {
+            $_POST = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['productos'] = $model->getAllSearch($_POST['search']);
+        } else {
+            $data['productos'] = $model->getAll();
+        }
 
         $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/shop.view.php', 'tienda/templates/footer.view.php'), $data);
         //$this->view->show('tienda.view.php', $data);
