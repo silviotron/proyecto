@@ -11,7 +11,7 @@ class MarcaModel extends \Com\Daw2\Core\BaseModel {
         return $stmt->fetchAll();
     }
 
-    function get(string $id): array {
+    function get(string $id) {
         $stmt = $this->pdo->prepare('SELECT * FROM aux_marca WHERE id_marca=?');
         $stmt->execute([$id]);
         return $stmt->fetchAll()[0];

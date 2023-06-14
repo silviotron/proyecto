@@ -35,7 +35,7 @@ class TiendaController extends \Com\Daw2\Core\BaseController {
         );
         $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
         $data['categorias'] = $categoriaModel->getAll();
-        
+
         $model = new \Com\Daw2\Models\ProductoModel();
         if (isset($_POST['search'])) {
             $_POST = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
@@ -51,14 +51,17 @@ class TiendaController extends \Com\Daw2\Core\BaseController {
     function details($id) {
         $model = new \Com\Daw2\Models\ProductoModel();
         $producto = $model->get($id);
-        $data = array(
-            'seccion' => '/tienda',
-            'titulo' => $producto['nombre'],
-            'breadcrumb' => [$producto['nombre']]
-        );
-        $data['producto'] = $producto;
-        $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/product.view.php', 'tienda/templates/footer.view.php'), $data);
-        //$this->view->show('tienda.view.php', $data);
+        if (empty($producto)) {
+            header('location: /tienda');
+        } else {
+            $data = array(
+                'seccion' => '/tienda',
+                'titulo' => $producto['nombre'],
+                'breadcrumb' => [$producto['nombre']]
+            );
+            $data['producto'] = $producto;
+            $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/product.view.php', 'tienda/templates/footer.view.php'), $data);
+        }
     }
 
     function categoria($id) {

@@ -81,6 +81,7 @@ class CategoriaController extends \Com\Daw2\Core\BaseController {
             );
             $modelo = new \Com\Daw2\Models\CategoriaModel();
             $input = $modelo->get($id);
+            
             if (is_null($input)) {
                 header('location: /categorias');
             } else {
