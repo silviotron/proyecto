@@ -84,10 +84,10 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 'titulo' => 'Productos',
                 'breadcrumb' => ['Add']
             );
+            unset($_POST['imagen']);
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
             
             $data['errores'] = $errores;
-            $data['input']['imagen'] = "assets/images/product/$id.jpg";
 
             $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
             $data['categorias'] = $categoriaModel->getAll();
@@ -173,6 +173,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
                 'breadcrumb' => ['Edit']
             );
             $data['input'] = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+            $data['input']['imagen'] = "assets/images/product/$id.jpg";
             $data['errores'] = $errores;
 
             $categoriaModel = new \Com\Daw2\Models\CategoriaModel();
@@ -183,6 +184,7 @@ class ProductoController extends \Com\Daw2\Core\BaseController {
 
             $precioModel = new \Com\Daw2\Models\PrecioModel();
             $data['precios'] = $precioModel->getAll();
+            
             $this->view->showViews(array('templates/header.view.php', 'templates/left-menu.view.php', 'add.producto.view.php', 'templates/footer.view.php'), $data);
         }
     }

@@ -16,6 +16,9 @@
                         R. Senén Canido, 2, 36860 Ponteareas, Pontevedra
                     </p>
                     <p class="copywrite">
+                        +34 652 125 100
+                    </p>
+                    <p class="copywrite">
                         Copyright &copy;
                         <script>document.write(new Date().getFullYear());</script> Calceta
                     </p>
