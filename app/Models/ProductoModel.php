@@ -53,4 +53,14 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
         }
     }
 
+    public function stock($id) {
+        $stmt = $this->pdo->prepare("SELECT stock FROM producto WHERE id=?");
+        $stmt->execute([$id]);
+        return $stmt->fetchAll()[0]['stock'];
+    }
+    public function restarStock($id,$cantidad) {
+        $stmt = $this->pdo->prepare("UPDATE producto SET stock=stock-? WHERE id=?");
+        return $stmt->execute([$cantidad,$id]) && $stmt->rowCount() == 1;
+    }
+
 }

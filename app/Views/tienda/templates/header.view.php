@@ -15,6 +15,8 @@
 
         <link rel="stylesheet" href="css/core-style.css">
         <link rel="stylesheet" href="style.css">
+        
+        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
     </head>
 
     <body>

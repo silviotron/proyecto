@@ -6,12 +6,13 @@ namespace Com\Daw2\Controllers;
 
 class CarritoController extends \Com\Daw2\Core\BaseController {
 
-    function cart() {
+    function cart($err = [] ) {
         $data = array(
             'seccion' => '/usuarios',
             'titulo' => 'Usuarios',
             'breadcrumb' => ['Usuarios']
         );
+        $data['errores'] = $err;
         //TODO: guardar en data los productos del carrito guardado en session
         $model = new \Com\Daw2\Models\ProductoModel();
         $subTotal = 0;
@@ -34,7 +35,6 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
         }
 
         $this->view->showViews(array('tienda/templates/header.view.php', 'tienda/cart.view.php', 'tienda/templates/footer.view.php'), $data);
-        //$this->view->show('tienda.view.php', $data);
     }
 
     function add($id) {
@@ -100,14 +100,31 @@ class CarritoController extends \Com\Daw2\Core\BaseController {
     }
 
     function comprar() {
-        if (isset($_SESSION['usuario'])) {
-            $model = new \Com\Daw2\Models\PedidoModel();
-            $model->comprar($_SESSION['carrito'], $_SESSION['usuario']['id_usuario'], $_POST['direccion']);
-            $_SESSION['carrito'] = [];
-            header("location: \ ");
+        $error = [];
+        if (count($_SESSION['carrito']) > 0) {
+            foreach ($_SESSION['carrito'] as $item) {
+                $productoModel = new \Com\Daw2\Models\ProductoModel();
+                $stock = $productoModel->stock($item['producto']['id']);
+                if ($stock - $item['cantidad'] < 0) {
+                    $error[$item['producto']['id']] = "Stock insuficiente.";
+                }
+            }
+            if (count($error) <= 0) {
+                if (isset($_SESSION['usuario'])) {
+                    $_POST = filter_var_array($_POST, FILTER_SANITIZE_SPECIAL_CHARS);
+                    $model = new \Com\Daw2\Models\PedidoModel();
+                    $model->comprar($_SESSION['carrito'], $_SESSION['usuario']['id_usuario'], $_POST['direccion']);
+                    $_SESSION['carrito'] = [];
+                    header("location: \ ");
+                } else {
+                    header("location: \login ");
+                }
+            } else {
+                $this->cart($error);
+            }
         } else {
-            header("location: \login ");
-
+            $error['carrito'] = 'Carrito vacio.';
+            $this->cart($error);
         }
     }
 

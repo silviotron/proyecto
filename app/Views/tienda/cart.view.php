@@ -16,6 +16,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        
                             <?php foreach ($_SESSION['carrito'] as $v) { ?>
                                 <tr>
                                     <td class="cart_product_img">
@@ -23,6 +24,7 @@
                                     </td>
                                     <td class="cart_product_desc">
                                         <h5><?php echo $v['producto']['nombre']; ?></h5>
+                                        <span style="color: red; font-size: 12px; position: absolute"><?php echo isset($errores[$v['producto']['id']])?$errores[$v['producto']['id']]:''; ?></span>
                                     </td>
                                     <td class="price">
                                         <span><?php echo $v['producto']['precio'] . ' €'; ?></span>
@@ -48,10 +50,11 @@
                         <li><span>Envio:</span> <span><?php echo $envio; ?></span></li>
                         <li><span>Total:</span> <span><?php echo $total . ' €'; ?></span></li>
                         <li style="margin-bottom: 0px"><label for="direccion"><span>Direccion: </span></label> </li>
-                        <textarea style="resize: none; width: 100%; height: 100px"  type="text" id="direccion" name="direccion"> </textarea>
+                        <textarea style="resize: none; width: 100%; height: 100px"  type="text" id="direccion" name="direccion"><?php echo isset($_SESSION['usuario'])?$_SESSION['usuario']['direccion']:''; ?></textarea>
                     </ul>
                     <div class="cart-btn mt-50">
                         <button type="submit" value="Comprar" name="comprar" class="btn amado-btn w-100">Comprar</button>
+                        <div style="color: red;font-size: 12px; text-align: center; width: 100%; margin-top: 5px"><?php echo isset($errores['carrito'])?$errores['carrito']:''; ?></div>
                     </div>
                     </form>
                 </div>
