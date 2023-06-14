@@ -11,10 +11,22 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
         return $stmt->fetchAll();
     }
 
+    function getAllByCategoria($categoria) {
+        $stmt = $this->pdo->prepare("SELECT producto.*, nombre_categoria, formato, nombre_marca FROM producto LEFT JOIN aux_categoria ON aux_categoria.id_categoria = producto.id_categoria LEFT JOIN aux_precio ON aux_precio.id = producto.id_tipo_precio  LEFT JOIN aux_marca ON aux_marca.id_marca = producto.id_marca WHERE producto.id_categoria=?");
+        $stmt->execute([$categoria]);
+        return $stmt->fetchAll();
+    }
+
     function get($id) {
         $stmt = $this->pdo->prepare("SELECT producto.*, nombre_categoria, formato, nombre_marca FROM producto LEFT JOIN aux_categoria ON aux_categoria.id_categoria = producto.id_categoria LEFT JOIN aux_precio ON aux_precio.id = producto.id_tipo_precio LEFT JOIN aux_marca ON aux_marca.id_marca = producto.id_marca WHERE producto.id=?");
         $stmt->execute([$id]);
         return $stmt->fetchAll()[0];
+    }
+
+    function getByCategoria($categoria) {
+        $stmt = $this->pdo->prepare("SELECT * FROM producto WHERE producto.id_categoria=? ORDER BY precio");
+        $stmt->execute([$categoria]);
+        return $stmt->fetchAll();
     }
 
     public function insert(array $data): int {
@@ -58,9 +70,10 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
         $stmt->execute([$id]);
         return $stmt->fetchAll()[0]['stock'];
     }
-    public function restarStock($id,$cantidad) {
+
+    public function restarStock($id, $cantidad) {
         $stmt = $this->pdo->prepare("UPDATE producto SET stock=stock-? WHERE id=?");
-        return $stmt->execute([$cantidad,$id]) && $stmt->rowCount() == 1;
+        return $stmt->execute([$cantidad, $id]) && $stmt->rowCount() == 1;
     }
 
 }

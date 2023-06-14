@@ -30,10 +30,10 @@
                                         <span><?php echo $v['producto']['precio'] . ' €'; ?></span>
                                     </td>
                                     <td class="qty">
-                                        <span style="margin-right: 5px;"><a style="color: #277270" href="/carrito/restar/<?php echo $v['producto']['id']; ?>">-</a></span>
+                                        <span style="margin-right: 5px;"><a style="color: #277270" href="/carrito/restar/<?php echo $v['producto']['id']; ?>"><i  style="font-size: 20px;" class="bi bi-dash"></i></a></span>
                                         <span><?php echo $v['cantidad']; ?></span>
-                                        <span style="margin-left: 5px;"><a style="color: #277270" href="/carrito/sumar/<?php echo $v['producto']['id']; ?>">+</a></span>
-                                        <span style="right: 4vw; position: absolute"><a style="color: #277270" href="/carrito/remove/<?php echo $v['producto']['id']; ?>">X</a></span>
+                                        <span style="margin-left: 5px;"><a style="color: #277270" href="/carrito/sumar/<?php echo $v['producto']['id']; ?>"><i  style="font-size: 20px;" class="bi bi-plus"></i></a></span>
+                                        <span style="right: 3vw; position: absolute"><a style="color: #277270" href="/carrito/remove/<?php echo $v['producto']['id']; ?>"><i  style="font-size: 20px;" class="bi bi-x"></i></a></span>
                                     </td>                                    
                                 </tr>
                             <?php } ?>

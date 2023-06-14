@@ -80,10 +80,10 @@
                 </div>
 
                 <div class="social-info d-flex justify-content-between">
-                    <a href="https://goo.gl/maps/SW1pJExJcGcTDVrU8" target="_blank"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                    <a href="https://www.instagram.com/planetacalceta/" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                    <a href="https://www.facebook.com/people/calceta/100041290436579/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                    <a href="https://www.paxinasgalegas.es/calceta-467645em.html" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a href="https://goo.gl/maps/SW1pJExJcGcTDVrU8" target="_blank"><i class="bi bi-geo-alt"  aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/planetacalceta/" target="_blank"><i class="bi bi-instagram"  aria-hidden="true"></i></a>
+                    <a href="https://www.facebook.com/people/calceta/100041290436579/" target="_blank"><i class="bi bi-facebook"  aria-hidden="true"></i></a>
+                    <a href="https://www.paxinasgalegas.es/calceta-467645em.html" target="_blank"><i class="bi bi-info-circle"  aria-hidden="true"></i></a>
                 </div>
             </header>
 
