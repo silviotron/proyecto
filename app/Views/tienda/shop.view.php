@@ -49,7 +49,7 @@
                                     <i class="fa fa-star" aria-hidden="true"></i>
                                 </div>
                                 <div class="cart">
-                                    <a href="/carrito/add/<?php echo $producto['id'] ?>" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt="cart"></a>
+                                    <a href="/carrito/add/<?php echo $producto['id'] ?>" data-toggle="tooltip" data-placement="left" title="Add to Cart"><i style="font-size: 20px" class="bi bi-cart"></i></a>
                                 </div>
                             </div>
                         </div>

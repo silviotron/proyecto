@@ -29,9 +29,9 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="search-content">
-                            <form action="#" method="get">
-                                <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                                <button type="submit"><img src="img/core-img/search.png" alt=""></button>
+                            <form action="/tienda" method="post">
+                                <input type="search" name="search" id="search" placeholder="Buscar...">
+                                <button type="submit"><i class="bi bi-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -75,8 +75,8 @@
                 </div>
 
                 <div class="cart-fav-search mb-100">
-                    <a href="/carrito" class="cart-nav"><img src="img/core-img/cart.png" alt=""> Cart <span>(<?php echo isset($_SESSION['carrito']) ? count($_SESSION['carrito']) : '0' ?>)</span></a>
-                    <a href="#" class="search-nav"><img src="img/core-img/search.png" alt=""> Search</a>
+                    <a href="/carrito" class="cart-nav"><i class="bi bi-cart"></i> Cart <span>(<?php echo isset($_SESSION['carrito']) ? count($_SESSION['carrito']) : '0' ?>)</span></a>
+                    <a href="#" class="search-nav"><i class="bi bi-search"></i> Search</a>
                 </div>
 
                 <div class="social-info d-flex justify-content-between">

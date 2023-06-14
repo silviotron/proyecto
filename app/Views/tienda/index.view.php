@@ -8,7 +8,7 @@
 
                     <div class="hover-content">
                         <div class="line"></div>
-                        <p><?php echo 'Desde ' . $categoria['producto']['id'] . ' €' ?></p>
+                        <p><?php echo 'Desde ' . $categoria['producto']['precio'] . ' €' ?></p>
                         <h4><?php echo $categoria['categoria']['nombre_categoria'] ?></h4>
                     </div>
                 </a>

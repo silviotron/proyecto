@@ -38,7 +38,7 @@
                                 <i class="fa fa-star" aria-hidden="true"></i>
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             </div>
-                            <div class="review">
+                            <div class="review" style="visibility: hidden">
                                 <a href="review/<?php echo $producto['id'] ?>">Write A Review</a>
                             </div>
                         </div>

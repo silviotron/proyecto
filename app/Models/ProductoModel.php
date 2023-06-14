@@ -24,7 +24,7 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
     }
 
     function getByCategoria($categoria) {
-        $stmt = $this->pdo->prepare("SELECT * FROM producto WHERE producto.id_categoria=? ORDER BY precio");
+        $stmt = $this->pdo->prepare("SELECT * FROM producto WHERE producto.id_categoria=? ORDER BY precio ASC");
         $stmt->execute([$categoria]);
         return $stmt->fetchAll();
     }
