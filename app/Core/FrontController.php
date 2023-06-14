@@ -191,12 +191,6 @@ class FrontController {
                         }
                         , 'post');
 
-                Route::add('/usuarios/cant_add',
-                        function () {
-                            $controlador = new \Com\Daw2\Controllers\UsuarioController();
-                            $controlador->cant_add();
-                        }
-                        , 'get');
             }
 
             # Gestion de productos
@@ -252,12 +246,6 @@ class FrontController {
                         }
                         , 'post');
 
-                Route::add('/productos/cant_add',
-                        function () {
-                            $controlador = new \Com\Daw2\Controllers\ProductoController();
-                            $controlador->cant_add();
-                        }
-                        , 'get');
             }
 
             # Gestion de categorias
@@ -313,12 +301,6 @@ class FrontController {
                         }
                         , 'post');
 
-                Route::add('/categorias/cant_add',
-                        function () {
-                            $controlador = new \Com\Daw2\Controllers\CategoriaController();
-                            $controlador->cant_add();
-                        }
-                        , 'get');
             }
 
             # Gestion de marcas
@@ -374,10 +356,20 @@ class FrontController {
                         }
                         , 'post');
 
-                Route::add('/marcas/cant_add',
+            }
+            # Gestion de pedidos
+            if (strpos($_SESSION['permisos']['pedidos'], 'r') !== false) {
+                Route::add('/pedidos',
                         function () {
-                            $controlador = new \Com\Daw2\Controllers\MarcaController();
-                            $controlador->cant_add();
+                            $controlador = new \Com\Daw2\Controllers\PedidoController();
+                            $controlador->mostrarTodos();
+                        }
+                        , 'get');
+
+                Route::add('/pedidos/view/([A-Za-z0-9]+)',
+                        function ($id) {
+                            $controlador = new \Com\Daw2\Controllers\PedidoController();
+                            $controlador->view($id);
                         }
                         , 'get');
             }

@@ -15,6 +15,7 @@ class InicioController extends \Com\Daw2\Core\BaseController
         
         $pedidoModel = new \Com\Daw2\Models\PedidoModel();
         $data['pedidos'] = $pedidoModel->count();
+        $data['total'] = $pedidoModel->total();
         $usuarioModel = new \Com\Daw2\Models\UsuarioModel();
         $data['usuarios'] = $usuarioModel->count();
         

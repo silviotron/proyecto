@@ -36,11 +36,24 @@
                 <span>Marcas</span>
             </a>
         </li><!-- End Marcas Page Nav -->
+        <?php } if (strpos($_SESSION['permisos']['pedidos'], 'r') !== false) { ?>
+        <li class="nav-item">
+            <a class="nav-link <?php echo isset($seccion) && $seccion === '/pedidos' ? '' : 'collapsed'; ?>" href="/pedidos">
+                <i class="bi bi-truck"></i>
+                <span>Pedidos</span>
+            </a>
+        </li><!-- End Marcas Page Nav -->
         <?php } ?>
         <li class="nav-item">
             <a class="nav-link <?php echo isset($seccion) && $seccion === '/perfil' ? '' : 'collapsed'; ?>" href="/perfil">
                 <i class="bi bi-person"></i>
                 <span>Perfil</span>
+            </a>
+        </li><!-- End Perfil Page Nav -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="/session/borrar">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Salir</span>
             </a>
         </li><!-- End Perfil Page Nav -->
 

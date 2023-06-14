@@ -57,9 +57,14 @@ class ProductoModel extends \Com\Daw2\Core\BaseModel {
     }
 
     public function delete(string $id): bool {
-        $stmt = $this->pdo->prepare("DELETE FROM producto WHERE id = ?");
-        if ($stmt->execute([$id]) && $stmt->rowCount() == 1) {
-            return true;
+        $modelo = new \Com\Daw2\Models\PedidoModel();
+        if ($modelo->producto($id) == 0) {
+            $stmt = $this->pdo->prepare("DELETE FROM producto WHERE id = ?");
+            if ($stmt->execute([$id]) && $stmt->rowCount() == 1) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
