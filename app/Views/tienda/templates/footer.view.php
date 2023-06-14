@@ -24,6 +24,21 @@
                     </p>
                 </div>
             </div>
+            <div class="col-12 col-lg-4">
+
+                <div class="single_widget_area">
+
+                    <p class="copywrite">
+                        Horario:
+                    </p>
+                    <p class="copywrite">
+                        Lunes de 17:00 a 19:00
+                    </p>
+                    <p class="copywrite">
+                        Martes a sábado de 10:30 a 13:30
+                    </p>
+                </div>
+            </div>
 
 
         </div>
